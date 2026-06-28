@@ -105,7 +105,11 @@ class SmartShopper:
             try:
                 # Navigate to search page with Hebrew query
                 search_url = f"{base_url}/online/search?q={search_term}"
-                self.page.goto(search_url, wait_until="networkidle", timeout=15000)
+                try:
+                    self.page.goto(search_url, wait_until="networkidle", timeout=20000)
+                except:
+                    # If networkidle times out, continue anyway with domcontentloaded
+                    self.page.goto(search_url, wait_until="domcontentloaded", timeout=20000)
 
                 # Wait for products to load (Vue.js needs time to render)
                 self.page.wait_for_timeout(5000)
@@ -135,10 +139,14 @@ class SmartShopper:
                     price_match = re.search(r'(\d+\.?\d*)\s*שקל', product_text)
                     price = float(price_match.group(1)) if price_match else 0
 
+                    # Clean product name (remove newlines and extra whitespace)
+                    product_name = product_text.split("|")[0].strip()
+                    product_name = " ".join(product_name.split())[:50]
+
                     item = {
                         "query": query,
                         "id": product_id,
-                        "name": product_text.split("|")[0].strip()[:50],
+                        "name": product_name,
                         "price": price,
                         "barcode": product_id
                     }
