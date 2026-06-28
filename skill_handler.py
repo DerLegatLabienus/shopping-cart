@@ -117,7 +117,12 @@ class ShoppingListSkill:
 
     def process_query(self, user_query: str) -> Dict:
         """
-        Process user query and return shopping list with metadata
+        Process user query and return shopping list with metadata.
+
+        Automatically detects if user wants to:
+        1. BUY/ADD items via browser automation → uses search_and_batch_add()
+        2. SEARCH local database → uses local search
+
         Returns: {
             'list_markdown': str,
             'products': List[Dict],
@@ -127,6 +132,49 @@ class ShoppingListSkill:
         }
         """
         query_lower = user_query.lower()
+
+        # Detect if user wants to buy/add items (browser automation)
+        # Keywords in Hebrew and English: buy, purchase, add to cart, shopping
+        buy_keywords = [
+            'קנה', 'קנו', 'קניה', 'buy', 'purchase', 'shop', 'add', 'cart',
+            'נקנה', 'בוא נקנה', 'בואו נקנה'  # Hebrew: let's buy
+        ]
+
+        wants_to_buy = any(keyword in query_lower for keyword in buy_keywords)
+
+        # If user wants to buy items and has product names, use browser automation
+        if wants_to_buy:
+            # Extract product names from the query
+            # Remove common words and keywords to get product names
+            remove_words = [
+                'קנה', 'קנו', 'קניה', 'buy', 'purchase', 'shop', 'add', 'cart',
+                'נקנה', 'בוא', 'נקנה', 'בואו', 'לבית', 'לבחור', 'בי',
+                'חצי', 'קילו', 'קילוגרם', 'לחצי'
+            ]
+
+            # Split query and filter
+            words = query_lower.split()
+            product_names = [w for w in words if w not in remove_words and len(w) > 2]
+
+            if product_names:
+                try:
+                    # Try browser automation
+                    print(f"🌐 Using browser automation for shopping...")
+                    result = self.search_and_batch_add(" ".join(product_names[:10]))  # Limit to 10 products
+
+                    # If successful, return the result
+                    if result.get('success'):
+                        return {
+                            'list_markdown': f"✅ Browser automation result:\n{result.get('message', '')}",
+                            'products': result.get('shopping_list', []),
+                            'metadata': {'via': 'browser_automation'},
+                            'clarifying_questions': [],
+                            'summary': result.get('message', 'Items added to cart'),
+                            'browser_automation': True
+                        }
+                except Exception as e:
+                    print(f"⚠️  Browser automation failed, falling back to local search: {str(e)}")
+                    # Fall through to local search below
 
         # Extract search parameters from query
         name_query = user_query  # Default search term
