@@ -36,18 +36,17 @@ class SmartShopper:
 
     def connect_to_chrome(self) -> bool:
         """
-        Connect to user's Chrome browser (automatically).
+        Connect to browser (fully automated).
 
-        Auto-starts Chrome with debugging if not already running.
+        Handles fallbacks:
+        1. Connect to existing Chrome on debug port
+        2. Auto-start Chrome with debugging
+        3. Use Playwright's bundled Chromium
 
         Returns:
             True if connected successfully
         """
-        if not self.connector.check_chrome_running():
-            # Auto-start Chrome silently
-            if not self.connector.start_chrome():
-                return False
-
+        # connect() handles all fallbacks internally
         self.page = self.connector.connect()
         return self.page is not None
 
@@ -85,13 +84,22 @@ class SmartShopper:
             try:
                 # Navigate to search page
                 search_url = f"{base_url}/online/search?q={query}"
-                self.page.goto(search_url, wait_until="domcontentloaded", timeout=15000)
+                self.page.goto(search_url, wait_until="networkidle", timeout=15000)
 
-                # Wait for products to load (YOUR Chrome loads faster, no detection!)
-                self.page.wait_for_timeout(2000)
+                # Wait for products to load (Vue.js needs time to render)
+                self.page.wait_for_timeout(5000)
 
-                # Get products from page
+                # Get products from page - try multiple selectors
                 products = self.page.query_selector_all('[id*="product"]')
+
+                # Fallback selectors if first didn't work
+                if not products:
+                    products = self.page.query_selector_all('[class*="product"], [class*="item"]')
+
+                # If still nothing, try generic button elements
+                if not products:
+                    all_buttons = self.page.query_selector_all('[role="button"]')
+                    products = [b for b in all_buttons if 'product' in (b.get_attribute('id') or '').lower()]
 
                 if products:
                     print(f"   ✓ Found {len(products)} results")
