@@ -1,3 +1,21 @@
+# Architecture Refactor — Progress Ledger
+
+Plan: docs/superpowers/plans/2026-06-28-skill-architecture-refactor.md
+Branch start commit: b3c5a6f
+
+## Tasks
+
+Task 1: store.py — complete (commits b3c5a6f..c11baf8, review clean; Minor: test_store_is_abstract could use pytest.raises(TypeError))
+Task 2: product_cache.py — complete (commits c11baf8..5d7f881, review clean after fix; fixed double-read + JSON error handling)
+Task 3: query_parser.py — complete (commits 5d7f881..a802aee, review clean; Minor: "organic" in both category+attribute, "less than N" silently fails, dietary terms leak to keywords)
+Task 4: cart_manager.py — complete (commits a802aee..78e0122, review clean; Minor: shared mutable ref in get(), mark_unverified missing test)
+Task 5: rami_levy_store.py — complete (commits 78e0122..39a118c, review clean; Minor: SearchEngine not refreshed on cache miss, max_price=0.0 falsy check, get_cart() id="live")
+Task 6: skill_handler.py — complete (commits 39a118c..6323f99, final review clean after 4 fixes)
+
+=== ALL TASKS COMPLETE — pushed to origin/master ===
+
+---
+# Previous plan (Browser Automation) — archived below
 # Rami Levy Browser Automation - Progress Ledger
 
 Task 1: Setup Dependencies - complete (commit ba9ddd4, review clean)

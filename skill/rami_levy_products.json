@@ -42,7 +42,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d0\u05d3\u05d5\u05de\u05d5\u05ea"
+      "hebrew_name": "עדשים אדומות"
     },
     {
       "id": "prod_002",
@@ -67,7 +67,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d9\u05e8\u05d5\u05e7\u05d5\u05ea"
+      "hebrew_name": "עדשים ירוקות"
     },
     {
       "id": "prod_003",
@@ -87,7 +87,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05e9\u05d7\u05d5\u05e8\u05d5\u05ea \u05d1\u05dc\u05d5\u05d2"
+      "hebrew_name": "עדשים שחורות בלוג"
     },
     {
       "id": "prod_004",
@@ -108,7 +108,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d7\u05d5\u05de\u05d5\u05ea"
+      "hebrew_name": "עדשים חומות"
     },
     {
       "id": "prod_005",
@@ -129,7 +129,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e8\u05d2\u05d9\u05dc"
+      "hebrew_name": "חומוס רגיל"
     },
     {
       "id": "prod_006",
@@ -150,7 +150,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e2\u05d3\u05e9\u05d9\u05dd \u05e9\u05dc\u05de\u05d5\u05ea"
+      "hebrew_name": "חומוס עדשים שלמות"
     },
     {
       "id": "prod_007",
@@ -171,7 +171,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d2\u05d3\u05d5\u05dc"
+      "hebrew_name": "חומוס גדול"
     },
     {
       "id": "prod_008",
@@ -192,7 +192,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d9\u05e8\u05d5\u05e9\u05dc\u05de\u05d9"
+      "hebrew_name": "חומוס ירושלמי"
     },
     {
       "id": "prod_009",
@@ -213,7 +213,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e1\u05d1\u05d7\u05d4"
+      "hebrew_name": "חומוס סבחה"
     },
     {
       "id": "prod_010",
@@ -234,7 +234,7 @@
         "ready-to-eat"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d7\u05e8\u05d9\u05e3"
+      "hebrew_name": "חומוס חריף"
     },
     {
       "id": "prod_011",
@@ -746,7 +746,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05d7\u05dc\u05d1"
+      "hebrew_name": "חלב"
     },
     {
       "id": "prod_038",
@@ -765,7 +765,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05d9\u05d5\u05d2\u05d5\u05e8\u05d8 \u05d9\u05d5\u05d5\u05e0\u05d9"
+      "hebrew_name": "יוגורט יווני"
     },
     {
       "id": "prod_039",
@@ -892,7 +892,7 @@
         "kosher"
       ],
       "organic": false,
-      "hebrew_name": "\u05dc\u05d7\u05dd \u05e4\u05d9\u05ea\u05d4"
+      "hebrew_name": "לחם פיתה"
     },
     {
       "id": "prod_046",
@@ -1233,7 +1233,7 @@
         "kosher"
       ],
       "organic": true,
-      "hebrew_name": "\u05e2\u05d2\u05d1\u05e0\u05d9\u05d5\u05ea \u05d0\u05d5\u05e8\u05d2\u05e0\u05d9\u05d5\u05ea"
+      "hebrew_name": "עגבניות אורגניות"
     },
     {
       "id": "prod_064",
@@ -1403,7 +1403,7 @@
         "kosher"
       ],
       "organic": true,
-      "hebrew_name": "\u05d9\u05d5\u05d2\u05d5\u05e8\u05d8 \u05d0\u05d5\u05e8\u05d2\u05e0\u05d9"
+      "hebrew_name": "יוגורט אורגני"
     },
     {
       "id": "prod_073",
@@ -1688,5 +1688,6 @@
       ],
       "organic": false
     }
-  ]
+  ],
+  "_cache_updated_at": 1782659716.9878347
 }
