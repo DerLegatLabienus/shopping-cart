@@ -1103,6 +1103,115 @@ class ShoppingListSkill:
                 'message': f'❌ Error: {str(e)}'
             }
 
+    def search_and_batch_add(self, query: str) -> Dict:
+        """
+        Smart shopping workflow: Search products via YOUR Chrome → Build list → Batch add to cart.
+
+        NO bot detection because it uses YOUR browser session (trusted by Rami Levy).
+
+        Workflow:
+        1. Connect to your Chrome browser (must be running with --remote-debugging-port=9222)
+        2. Search for products using your session
+        3. Display shopping list
+        4. Batch add all items to cart
+
+        Args:
+            query: Space-separated product names (e.g., "milk pita yogurt")
+
+        Returns:
+            {
+                'success': bool,
+                'shopping_list': [...],
+                'added_count': int,
+                'failed_count': int,
+                'total_price': float,
+                'message': str
+            }
+
+        Usage:
+            # Start Chrome first:
+            # chrome --remote-debugging-port=9222
+
+            # Then use skill:
+            result = skill.search_and_batch_add("milk pita yogurt")
+        """
+        try:
+            from smart_shopper import SmartShopper
+        except ImportError:
+            return {
+                'success': False,
+                'shopping_list': [],
+                'added_count': 0,
+                'failed_count': 0,
+                'total_price': 0.0,
+                'message': '❌ Could not import SmartShopper. Make sure all dependencies are installed.'
+            }
+
+        try:
+            # Parse queries
+            queries = query.strip().split()
+            if not queries:
+                return {
+                    'success': False,
+                    'shopping_list': [],
+                    'added_count': 0,
+                    'failed_count': 0,
+                    'total_price': 0.0,
+                    'message': '❌ No search terms provided'
+                }
+
+            # Initialize shopper
+            shopper = SmartShopper()
+
+            # Connect to Chrome
+            if not shopper.connect_to_chrome():
+                return {
+                    'success': False,
+                    'shopping_list': [],
+                    'added_count': 0,
+                    'failed_count': 0,
+                    'total_price': 0.0,
+                    'message': '❌ Could not connect to Chrome. Make sure it\'s running with: chrome --remote-debugging-port=9222'
+                }
+
+            # Search for products
+            search_result = shopper.search_for_products(queries)
+
+            if not search_result['success']:
+                shopper.close()
+                return {
+                    'success': False,
+                    'shopping_list': [],
+                    'added_count': 0,
+                    'failed_count': 0,
+                    'total_price': 0.0,
+                    'message': f"❌ {search_result['message']}"
+                }
+
+            # Batch add to cart
+            add_result = shopper.batch_add_to_cart(search_result['shopping_list'])
+
+            shopper.close()
+
+            return {
+                'success': add_result['success'],
+                'shopping_list': search_result['shopping_list'],
+                'added_count': add_result['added_count'],
+                'failed_count': add_result['failed_count'],
+                'total_price': search_result['total_price'],
+                'message': f"✅ {add_result['message']}"
+            }
+
+        except Exception as e:
+            return {
+                'success': False,
+                'shopping_list': [],
+                'added_count': 0,
+                'failed_count': 0,
+                'total_price': 0.0,
+                'message': f'❌ Error: {str(e)}'
+            }
+
     def stop_shopping(self) -> Dict:
         """
         Close the persistent browser session when done shopping.
