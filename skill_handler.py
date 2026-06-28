@@ -12,6 +12,7 @@ import json
 
 class ShoppingListSkill:
     # Class-level browser instance for persistence across method calls
+    # Browser stays OPEN between method calls - you can interact with it manually
     _persistent_browser_manager = None
     _persistent_page = None
 
@@ -584,6 +585,13 @@ class ShoppingListSkill:
         - Items added to cart stay in the browser until explicitly closed
         - Use stop_shopping() to close browser when completely done
         - Each call to this method adds more items to the same cart
+
+        🤖 ANTI-BOT DETECTION:
+        - Browser uses stealth mode to avoid detection
+        - If you see "I'm not a robot" CAPTCHA: SOLVE IT MANUALLY
+        - Browser will stay open, you can interact with it
+        - After solving CAPTCHA, call this method again to continue
+        - Or shop manually in the browser - skill tracks your cart
 
         Args:
             query: User query (e.g., "milk bread" or "lentils")
