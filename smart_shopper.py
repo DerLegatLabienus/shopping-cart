@@ -36,33 +36,20 @@ class SmartShopper:
 
     def connect_to_chrome(self) -> bool:
         """
-        Connect to user's Chrome browser.
+        Connect to user's Chrome browser (automatically).
 
-        Instructions:
-        1. Open Chrome (or open if not already open)
-        2. In a terminal, start Chrome with debugging:
-           chrome --remote-debugging-port=9222
+        Auto-starts Chrome with debugging if not already running.
 
         Returns:
             True if connected successfully
         """
-        print("🌐 Connecting to your Chrome browser...")
-        print("   Make sure Chrome is running with: chrome --remote-debugging-port=9222\n")
-
         if not self.connector.check_chrome_running():
-            print("✗ Chrome not found on port 9222")
-            print("   Starting Chrome...")
+            # Auto-start Chrome silently
             if not self.connector.start_chrome():
-                print("   ✗ Could not start Chrome")
                 return False
 
         self.page = self.connector.connect()
-        if self.page:
-            print(f"✓ Connected to Chrome!")
-            print(f"  Current URL: {self.page.url}\n")
-            return True
-        else:
-            return False
+        return self.page is not None
 
     def search_for_products(self, queries: List[str]) -> Dict:
         """

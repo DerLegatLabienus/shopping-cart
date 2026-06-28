@@ -47,41 +47,74 @@ class ChromeConnector:
 
     def start_chrome(self) -> bool:
         """
-        Start Chrome with remote debugging enabled.
+        Start Chrome with remote debugging enabled (automatically).
 
         Returns:
             True if started successfully
         """
         try:
-            # Chrome/Chromium paths
+            # Chrome/Chromium paths (ordered by preference)
             chrome_paths = [
-                "google-chrome",  # Linux
-                "google-chrome-stable",  # Linux
-                "chromium",  # Linux
-                "chromium-browser",  # Linux
+                "google-chrome",  # Linux (common)
+                "google-chrome-stable",  # Linux (package manager)
+                "google-chrome-beta",  # Linux (beta)
+                "chromium",  # Linux (open source)
+                "chromium-browser",  # Linux (Debian/Ubuntu)
                 r"C:\Program Files\Google\Chrome\Application\chrome.exe",  # Windows
                 r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",  # Windows 32-bit
                 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",  # macOS
             ]
 
-            for chrome_path in chrome_paths:
+            chrome_path = None
+            for path in chrome_paths:
                 try:
-                    subprocess.Popen(
-                        [
-                            chrome_path,
-                            f"--remote-debugging-port={self.debug_port}",
-                            "--no-first-run",
-                            "--no-default-browser-check",
-                        ]
+                    # Test if chrome exists
+                    result = subprocess.run(
+                        [path, "--version"],
+                        capture_output=True,
+                        timeout=2
                     )
-                    print(f"✓ Chrome started with remote debugging on port {self.debug_port}")
-                    time.sleep(3)  # Wait for Chrome to start
-                    return True
-                except FileNotFoundError:
+                    if result.returncode == 0:
+                        chrome_path = path
+                        break
+                except (FileNotFoundError, subprocess.TimeoutExpired):
                     continue
 
-            print("✗ Could not find Chrome installation")
-            return False
+            if not chrome_path:
+                print("✗ Chrome not found. Install Chrome or Chromium to use this feature")
+                return False
+
+            # Start Chrome with remote debugging
+            # Use --no-sandbox for Linux environments
+            args = [
+                chrome_path,
+                f"--remote-debugging-port={self.debug_port}",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--start-maximized",
+                "--disable-extensions",
+            ]
+
+            # Add no-sandbox for Linux
+            if "linux" in subprocess.os.uname().sysname.lower() or "chrome" in chrome_path.lower():
+                args.append("--no-sandbox")
+
+            process = subprocess.Popen(
+                args,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+            # Wait for Chrome to start and be ready
+            time.sleep(4)
+
+            # Verify Chrome is running
+            if self.check_chrome_running():
+                print(f"✓ Chrome started automatically (PID: {process.pid})")
+                return True
+            else:
+                print("✗ Chrome started but not responding on debug port")
+                return False
 
         except Exception as e:
             print(f"✗ Error starting Chrome: {e}")
@@ -100,39 +133,50 @@ class ChromeConnector:
             # Get WebSocket endpoint from Chrome
             ws_endpoint = self._get_ws_endpoint()
 
-            if not ws_endpoint:
-                print("✗ Could not find Chrome WebSocket endpoint")
-                print("Make sure Chrome is running with: chrome --remote-debugging-port=9222")
-                return None
+            if ws_endpoint:
+                # Connect via WebSocket to existing Chrome
+                playwright = sync_playwright().start()
+                self.browser = playwright.chromium.connect(ws_endpoint)
 
-            print(f"✓ Found Chrome at: {ws_endpoint}")
+                # Get or create page
+                contexts = self.browser.contexts
+                if contexts:
+                    context = contexts[0]
+                else:
+                    context = self.browser.new_context()
 
-            # Connect via WebSocket
+                pages = context.pages
+                if pages:
+                    self.page = pages[0]
+                else:
+                    self.page = context.new_page()
+
+                return self.page
+
+            # Fallback: Use Playwright's bundled Chromium (always available)
             playwright = sync_playwright().start()
-            self.browser = playwright.chromium.connect(ws_endpoint)
+            self.browser = playwright.chromium.launch(
+                headless=False,
+                args=[
+                    '--disable-blink-features=AutomationControlled',
+                    '--no-first-run',
+                    '--no-default-browser-check',
+                ]
+            )
 
-            # Get or create page
-            contexts = self.browser.contexts
-            if contexts:
-                # Use existing context
-                context = contexts[0]
-            else:
-                # Create new context
-                context = self.browser.new_context()
+            context = self.browser.new_context(
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            )
+            self.page = context.new_page()
 
-            pages = context.pages
-            if pages:
-                # Use existing page
-                self.page = pages[0]
-            else:
-                # Create new page
-                self.page = context.new_page()
+            # Inject stealth
+            self.page.add_init_script("""
+                Object.defineProperty(navigator, 'webdriver', { get: () => false });
+            """)
 
-            print(f"✓ Connected to Chrome browser")
             return self.page
 
         except Exception as e:
-            print(f"✗ Error connecting to Chrome: {e}")
             return None
 
     def _get_ws_endpoint(self) -> Optional[str]:

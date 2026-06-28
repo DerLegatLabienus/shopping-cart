@@ -1103,6 +1103,66 @@ class ShoppingListSkill:
                 'message': f'❌ Error: {str(e)}'
             }
 
+    def shop_vegetarian_family(self) -> Dict:
+        """
+        Automated shopping: Build vegetarian family list and add to cart.
+
+        One-click shopping:
+        1. Builds typical vegetarian family shopping list
+        2. Auto-launches Chrome if needed
+        3. Searches for items on Rami Levy
+        4. Batch adds all items to cart
+        5. Shows summary of what was added/missing
+
+        Returns:
+            {
+                'success': bool,
+                'items_added': [...],
+                'items_missing': [...],
+                'added_count': int,
+                'missing_count': int,
+                'total_price': float,
+                'message': str
+            }
+        """
+        # Typical vegetarian family shopping list
+        shopping_queries = [
+            "milk",
+            "yogurt",
+            "cheese",
+            "bread",
+            "eggs",
+            "lentils",
+            "chickpeas",
+            "tomatoes",
+            "onions",
+            "vegetables"
+        ]
+
+        # Search and batch add
+        result = self.search_and_batch_add(" ".join(shopping_queries))
+
+        # Build detailed summary
+        items_added = result.get('shopping_list', [])
+        added_names = [item['name'] for item in items_added]
+
+        # Find what's missing from our original list
+        items_missing = []
+        for query in shopping_queries:
+            if not any(query.lower() in item['name'].lower() or query.lower() in item['query'].lower()
+                      for item in items_added):
+                items_missing.append(query)
+
+        return {
+            'success': result['success'],
+            'items_added': items_added,
+            'items_missing': items_missing,
+            'added_count': result['added_count'],
+            'missing_count': len(items_missing),
+            'total_price': result['total_price'],
+            'message': result['message']
+        }
+
     def search_and_batch_add(self, query: str) -> Dict:
         """
         Smart shopping workflow: Search products via YOUR Chrome → Build list → Batch add to cart.
