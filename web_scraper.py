@@ -98,7 +98,11 @@ class WebScraper:
             # Navigate to search URL with product name query
             search_url = self.SEARCH_URL + search_term
             page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
-            page.wait_for_timeout(3000)  # Wait for Vue/dynamic rendering
+
+            # Human-like delays - vary the wait time (2-4 seconds)
+            import random
+            wait_time = random.randint(2000, 4000)
+            page.wait_for_timeout(wait_time)  # Wait for Vue/dynamic rendering
 
             # Get page content and parse with BeautifulSoup
             html_content = page.content()

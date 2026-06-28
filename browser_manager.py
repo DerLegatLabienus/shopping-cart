@@ -51,11 +51,35 @@ class BrowserManager:
             self.playwright_instance = sync_playwright().start()
 
             # Launch browser in non-headless mode (user can see window)
-            self.browser = self.playwright_instance.chromium.launch(headless=False)
+            # Add anti-detection arguments to avoid bot detection
+            self.browser = self.playwright_instance.chromium.launch(
+                headless=False,
+                args=[
+                    '--disable-blink-features=AutomationControlled',  # Hide automation flags
+                    '--no-first-run',
+                    '--no-default-browser-check',
+                    '--no-pings',
+                ]
+            )
 
-            # Create new context and page
-            self.browser_context = self.browser.new_context()
+            # Create new context and page with realistic user agent
+            self.browser_context = self.browser.new_context(
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            )
             self.page = self.browser_context.new_page()
+
+            # Inject stealth JavaScript to hide automation indicators
+            self.page.add_init_script("""
+                Object.defineProperty(navigator, 'webdriver', {
+                    get: () => false,
+                });
+                Object.defineProperty(navigator, 'plugins', {
+                    get: () => [1, 2, 3, 4, 5],
+                });
+                Object.defineProperty(navigator, 'languages', {
+                    get: () => ['en-US', 'en'],
+                });
+            """)
 
             # Get browser process info
             try:

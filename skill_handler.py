@@ -578,8 +578,15 @@ class ShoppingListSkill:
         Processes a user query, builds a shopping list, and automatically adds items
         to the Rami Levy website cart using browser automation.
 
+        ⭐ PERSISTENT BROWSER: The browser STAYS OPEN after this call!
+        - First call: Opens new Chrome window (visible, headless=False)
+        - Subsequent calls: Reuse same browser, cart items persist
+        - Items added to cart stay in the browser until explicitly closed
+        - Use stop_shopping() to close browser when completely done
+        - Each call to this method adds more items to the same cart
+
         Args:
-            query: User query (e.g., "build shopping list for 500 shekels")
+            query: User query (e.g., "milk bread" or "lentils")
 
         Returns:
             {
@@ -629,18 +636,31 @@ class ShoppingListSkill:
                 return result
 
             # Step 2: Initialize modules
-            browser_manager = BrowserManager()
             web_scraper = WebScraper()
             cart_automation = CartAutomation()
 
-            # Step 3: Open browser
-            open_result = browser_manager.open_browser()
-            if not open_result.get('success'):
-                result['message'] = f"❌ Failed to open browser: {open_result.get('message')}"
-                return result
+            # Step 3: Use persistent browser if available, otherwise create one
+            # IMPORTANT: Keep browser open - do NOT close it automatically
+            if ShoppingListSkill._persistent_browser_manager and ShoppingListSkill._persistent_page:
+                # Reuse existing persistent browser
+                browser_manager = ShoppingListSkill._persistent_browser_manager
+                page = ShoppingListSkill._persistent_page
+                result['message'] = "Using existing browser session..."
+            else:
+                # Create new persistent browser
+                browser_manager = BrowserManager()
+                open_result = browser_manager.open_browser()
+                if not open_result.get('success'):
+                    result['message'] = f"❌ Failed to open browser: {open_result.get('message')}"
+                    return result
+
+                # Store for persistence
+                ShoppingListSkill._persistent_browser_manager = browser_manager
+                ShoppingListSkill._persistent_page = browser_manager.page
+                page = browser_manager.page
+                result['message'] = "Browser opened and will stay open for shopping"
 
             result['browser_active'] = True
-            page = browser_manager.page
 
             # Step 3.5: Handle city selection if prompted
             import time
@@ -665,8 +685,10 @@ class ShoppingListSkill:
             for idx, product in enumerate(products_to_add):
                 product_name = product.get('name', '')
 
-                # Use Hebrew name if available for more accurate searching
-                search_term = product.get('hebrew_name', product_name)
+                # IMPORTANT: Always pass English name to web_scraper
+                # web_scraper will translate to Hebrew automatically
+                # (Passing Hebrew name directly breaks translation logic)
+                search_term = product_name
 
                 try:
                     # Close delivery modal and product panels before each search
