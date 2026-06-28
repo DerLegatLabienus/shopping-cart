@@ -638,15 +638,43 @@ class ShoppingListSkill:
             result['browser_active'] = True
             page = browser_manager.page
 
-            # Step 4: Limit to 10 items for performance
-            products_to_add = products[:10]
+            # Step 3.5: Handle city selection if prompted
+            import time
+            time.sleep(1)
+            city_input = page.query_selector('input[placeholder*="עיר"]') or page.query_selector('input[placeholder*="city"]')
+            if city_input:
+                city_input.fill("תל אביב")
+                time.sleep(0.3)
+                confirm_btn = page.query_selector('button:has-text("אישור")') or page.query_selector('button:has-text("OK")')
+                if confirm_btn:
+                    try:
+                        confirm_btn.click()
+                        time.sleep(1)
+                    except:
+                        pass
+
+            # Step 4: Limit to 5 items for performance
+            products_to_add = products[:5]
 
             # Step 5: Process each product
-            for product in products_to_add:
+            for idx, product in enumerate(products_to_add):
                 product_name = product.get('name', '')
 
                 try:
-                    # Search for product on website
+                    # Close delivery modal if open
+                    try:
+                        page.evaluate("""() => {
+                            const modal = document.getElementById('delivery-modal');
+                            if (modal) modal.style.display = 'none';
+                            const backdrop = document.querySelector('.modal-backdrop');
+                            if (backdrop) backdrop.style.display = 'none';
+                        }""")
+                    except:
+                        pass
+
+                    time.sleep(0.5)
+
+                    # Search for product on website using Hebrew product names
                     search_result = web_scraper.search_product(page, product_name)
 
                     if not search_result.get('found'):
@@ -656,7 +684,7 @@ class ShoppingListSkill:
                         })
                         continue
 
-                    # Product found, add to cart
+                    # Product found, add to cart via + button click
                     product_url = search_result.get('url', '')
                     add_result = cart_automation.add_to_cart(page, product_url, quantity=1)
 
@@ -682,6 +710,10 @@ class ShoppingListSkill:
             # Step 6: Get cart total
             cart_total = cart_automation.get_cart_total(page)
             result['cart_total'] = cart_total
+
+            # Set success message
+            result['success'] = len(result['added_items']) > 0
+            result['message'] = f"✅ Added {len(result['added_items'])} items to cart" if result['success'] else "⚠️ Could not add items"
 
             # Step 7: Update browser session config
             browser_manager.update_session_config({

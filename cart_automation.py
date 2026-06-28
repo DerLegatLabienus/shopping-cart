@@ -64,45 +64,54 @@ class CartAutomation:
             }
 
         try:
-            # product_url contains the product ID (barcode) from search
-            # On Rami Levy, clicking the product button adds it to cart directly
-
-            # Extract product ID from URL (or use as-is if it's already an ID)
+            # product_url contains the product ID from search
             product_id = product_url.split('/')[-1] if '/' in product_url else product_url
 
-            # Find the product button by ID
-            # Format: id="product-7290117769690"
-            selector = f'[role="button"][id="product-{product_id}"]'
+            # Find and click the product button to open details
+            selector = f'[id="product-{product_id}"]'
             product_button = page.query_selector(selector)
 
             if not product_button:
-                # Try without the product- prefix in case it's just the ID
-                selector = f'[role="button"][id="{product_id}"]'
-                product_button = page.query_selector(selector)
-
-            if not product_button:
                 return {
                     'success': False,
-                    'message': f'❌ Could not find product button for ID: {product_id}',
+                    'message': f'❌ Could not find product {product_id}',
                     'product_name': product_id,
                     'quantity': quantity
                 }
 
-            # Click the product button to add to cart
+            # Click product to open details panel
             try:
                 product_button.click()
-                page.wait_for_timeout(1000)  # Wait for cart to update
-                button_found = True
+                page.wait_for_timeout(1500)
             except Exception as e:
                 return {
                     'success': False,
-                    'message': f'❌ Failed to click product button: {str(e)}',
+                    'message': f'❌ Failed to open product: {str(e)}',
                     'product_name': product_id,
                     'quantity': quantity
                 }
 
-            # After click, we assume product is added (Rami Levy shows visual feedback)
-            button_found = True
+            # Click the + button (SVG) to add to cart
+            # Use JavaScript since the SVG button can be tricky to locate/click
+            try:
+                page.evaluate("""() => {
+                    const svgs = document.querySelectorAll('svg');
+                    for (let svg of svgs) {
+                        if (svg.querySelector('polygon')) {
+                            svg.parentElement.click();
+                            return true;
+                        }
+                    }
+                    return false;
+                }""")
+                page.wait_for_timeout(800)
+            except Exception as e:
+                return {
+                    'success': False,
+                    'message': f'❌ Failed to click add button: {str(e)}',
+                    'product_name': product_id,
+                    'quantity': quantity
+                }
 
             # Track the added item
             self.added_items.append({
@@ -113,7 +122,7 @@ class CartAutomation:
 
             return {
                 'success': True,
-                'message': f'✅ Added product {product_id} (qty: {quantity}) to cart',
+                'message': f'✅ Added to cart',
                 'product_name': product_id,
                 'quantity': quantity
             }
