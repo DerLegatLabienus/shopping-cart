@@ -88,19 +88,48 @@ skill.search_and_batch_add("milk pita yogurt")
 
 ```
 shopping-cart/
-├── skill_handler.py          # MAIN SKILL - All methods here
-├── web_scraper.py            # Helper (imported by skill)
-├── cart_automation.py         # Helper (imported by skill)
-├── chrome_connector.py        # Helper (imported by skill)
-├── smart_shopper.py           # Helper (imported by skill)
-├── browser_manager.py         # Helper (imported by skill)
-├── rami_levy_api.py          # Helper (imported by skill)
-├── search_engine.py          # Helper (imported by skill)
-├── formatters.py             # Helper (imported by skill)
+├── skill/                     # ⭐ THE SKILL — single, self-contained source of truth
+│   ├── SKILL.md               #    Skill manifest (frontmatter: name/description/triggers)
+│   ├── skill_handler.py       #    MAIN entry — ShoppingListSkill, all methods
+│   ├── search_engine.py       #    Helper (imported by skill)
+│   ├── formatters.py          #    Helper (imported by skill)
+│   ├── rami_levy_web.py       #    Helper (imported by skill)
+│   ├── browser_manager.py     #    Helper (imported by skill)
+│   ├── web_scraper.py         #    Helper (imported by skill)
+│   ├── cart_automation.py     #    Helper (imported by skill)
+│   ├── smart_shopper.py       #    Helper (imported by skill)
+│   ├── chrome_connector.py    #    Helper (imported by skill)
+│   ├── rami_levy_api.py       #    Helper (imported by skill)
+│   ├── rami_levy_products.json#    Product database (path-resolved relative to module)
+│   └── requirements.txt       #    Runtime deps (Playwright, BeautifulSoup4)
+├── dev/                       # Debug & dev-only: tests/, demos, design notes, old docs
+├── docs/                      # Architecture / component / schema docs
+├── install.sh                 # Sync ./skill into agent skills dirs (real dir copy)
+├── README.md
 └── CLAUDE.md                  # This file
 ```
 
-**NO standalone test files, debug scripts, or temporary Python files.**
+**Everything the skill needs lives in `skill/` and nothing else does.** Tests, demos,
+and scratch docs live in `dev/`. The skill is portable: `skill/` can be dropped into any
+agent's skills directory as-is.
+
+### Installing / loading the skill
+
+The skill is **copied** (not symlinked) into the skills directories — the Claude Code
+loader, which runs inside WSL, does **not** pick up symlinked skill folders:
+
+```bash
+bash install.sh            # copies ./skill -> ~/.claude/skills/rami-levi-shopping-cart
+                           #           and    -> ~/.agents/skills/rami-levi-shopping-cart
+```
+
+Then restart the WSL `claude` session (or `/reload-skills`) to load it.
+
+> Environment note: the `claude` engine runs **inside WSL** (`~/.claude` = `/home/aavitan/.claude`).
+> A Windows terminal is only the client. Do all install/file ops from WSL (or `wsl bash`),
+> never via Windows PowerShell symlinks — those create reparse points the Linux loader ignores.
+
+**NO standalone test files, debug scripts, or temporary Python files in `skill/`.**
 
 ### Testing Pattern
 

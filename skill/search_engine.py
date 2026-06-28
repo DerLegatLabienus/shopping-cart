@@ -16,6 +16,14 @@ class SearchEngine:
 
     def load_products(self, db_path: str):
         """Load products from JSON database"""
+        # Portability: if a bare/relative path isn't found in the CWD,
+        # resolve it relative to this module's directory so the skill works
+        # no matter which directory the agent launches it from.
+        if not os.path.isabs(db_path) and not os.path.exists(db_path):
+            module_dir = os.path.dirname(os.path.abspath(__file__))
+            candidate = os.path.join(module_dir, db_path)
+            if os.path.exists(candidate):
+                db_path = candidate
         try:
             with open(db_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
