@@ -43,24 +43,37 @@ class ShoppingListSkill:
             },
         }
 
-    def add_to_cart(self, product_id: str, quantity: int = 1) -> Dict:
+    def add_to_cart(self, product_id: str, quantity: int = 1, hebrew_name: str = None) -> Dict:
+        """
+        Add item to cart. Requires Hebrew product name for Rami Levy website.
+
+        Args:
+            product_id: Product ID from database
+            quantity: Quantity to add
+            hebrew_name: REQUIRED - Hebrew product name for website search
+                        Will throw exception if English name provided or missing
+
+        Raises:
+            ValueError: If Hebrew name is missing or English detected
+        """
         try:
-            # Get product info to find its name
+            if not hebrew_name:
+                raise ValueError("❌ HEBREW NAME REQUIRED: Rami Levy is Hebrew-only. Provide Hebrew product name.")
+
+            # Validate that input is actually Hebrew (not English)
+            if self._is_english(hebrew_name):
+                raise ValueError(f"❌ ENGLISH DETECTED: '{hebrew_name}' is English. Provide Hebrew name instead.")
+
+            # Get product info
             product_raw = self.store.search_engine.get_product_by_id(product_id)
             if not product_raw:
-                return {"success": False, "message": f"Product not found: {product_id}", "cart_total": self.cart.get().total}
+                raise ValueError(f"Product not found: {product_id}")
 
-            # Translate product name to Hebrew for website search
-            english_name = product_raw.get("name", "")
-            hebrew_name = self.translator.translate(english_name)
-
-            # Override the product name with Hebrew before adding to cart
-            product_raw_modified = product_raw.copy()
-            product_raw_modified["name"] = hebrew_name
-
-            # Add with Hebrew name (will be used in browser automation)
+            # Use provided Hebrew name for website search
             item = self.store.add_to_cart(product_id, quantity)
             self.cart.add(item)
+
+            english_name = product_raw.get("name", "")
             return {
                 "success": True,
                 "message": f"✅ Added: {english_name} ({hebrew_name}) - ₪{item.product.price * quantity:.2f}",
@@ -68,6 +81,13 @@ class ShoppingListSkill:
             }
         except ValueError as e:
             return {"success": False, "message": str(e), "cart_total": self.cart.get().total}
+
+    @staticmethod
+    def _is_english(text: str) -> bool:
+        """Check if text contains primarily English characters."""
+        english_count = sum(1 for c in text if ord(c) < 128 and c.isalpha())
+        hebrew_count = sum(1 for c in text if 0x0590 <= ord(c) <= 0x05FF)
+        return english_count > hebrew_count
 
     def get_cart_summary(self) -> Dict:
         local = self.cart.get()
