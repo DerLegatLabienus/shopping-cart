@@ -99,9 +99,10 @@ class WebScraper:
             search_url = self.SEARCH_URL + search_term
             page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
 
-            # Human-like delays - vary the wait time (2-4 seconds)
+            # Wait for Vue.js to fully render (increased from 3 seconds)
+            # Some pages take 5-8 seconds to load all products
             import random
-            wait_time = random.randint(2000, 4000)
+            wait_time = random.randint(5000, 8000)
             page.wait_for_timeout(wait_time)  # Wait for Vue/dynamic rendering
 
             # Get page content and parse with BeautifulSoup
