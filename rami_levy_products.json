@@ -27,17 +27,22 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 7.00,
+          "price": 7.0,
           "price_per_unit": "1.40 per 100g"
         },
         {
           "size": "1kg",
-          "price": 13.80,
+          "price": 13.8,
           "price_per_unit": "1.38 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d0\u05d3\u05d5\u05de\u05d5\u05ea"
     },
     {
       "id": "prod_002",
@@ -47,17 +52,22 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 7.00,
+          "price": 7.0,
           "price_per_unit": "1.40 per 100g"
         },
         {
           "size": "1kg",
-          "price": 13.90,
+          "price": 13.9,
           "price_per_unit": "1.39 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d9\u05e8\u05d5\u05e7\u05d5\u05ea"
     },
     {
       "id": "prod_003",
@@ -67,12 +77,17 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 9.10,
+          "price": 9.1,
           "price_per_unit": "1.82 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05e9\u05d7\u05d5\u05e8\u05d5\u05ea \u05d1\u05dc\u05d5\u05d2"
     },
     {
       "id": "prod_004",
@@ -82,12 +97,18 @@
       "sizes": [
         {
           "size": "380g can",
-          "price": 8.00,
+          "price": 8.0,
           "price_per_unit": "2.11 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05e2\u05d3\u05e9\u05d9\u05dd \u05d7\u05d5\u05de\u05d5\u05ea"
     },
     {
       "id": "prod_005",
@@ -97,12 +118,18 @@
       "sizes": [
         {
           "size": "700g",
-          "price": 10.50,
+          "price": 10.5,
           "price_per_unit": "1.50 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e8\u05d2\u05d9\u05dc"
     },
     {
       "id": "prod_006",
@@ -112,12 +139,18 @@
       "sizes": [
         {
           "size": "300g",
-          "price": 7.90,
+          "price": 7.9,
           "price_per_unit": "2.63 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e2\u05d3\u05e9\u05d9\u05dd \u05e9\u05dc\u05de\u05d5\u05ea"
     },
     {
       "id": "prod_007",
@@ -127,12 +160,18 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "1.70 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d2\u05d3\u05d5\u05dc"
     },
     {
       "id": "prod_008",
@@ -142,12 +181,18 @@
       "sizes": [
         {
           "size": "250g",
-          "price": 9.40,
+          "price": 9.4,
           "price_per_unit": "3.76 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d9\u05e8\u05d5\u05e9\u05dc\u05de\u05d9"
     },
     {
       "id": "prod_009",
@@ -157,12 +202,18 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 9.40,
+          "price": 9.4,
           "price_per_unit": "2.35 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05e1\u05d1\u05d7\u05d4"
     },
     {
       "id": "prod_010",
@@ -172,12 +223,18 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 9.40,
+          "price": 9.4,
           "price_per_unit": "2.35 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
-      "organic": false
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
+      "organic": false,
+      "hebrew_name": "\u05d7\u05d5\u05de\u05d5\u05e1 \u05d7\u05e8\u05d9\u05e3"
     },
     {
       "id": "prod_011",
@@ -187,11 +244,15 @@
       "sizes": [
         {
           "size": "box",
-          "price": 5.00,
+          "price": 5.0,
           "price_per_unit": "1.43 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -202,11 +263,15 @@
       "sizes": [
         {
           "size": "350g",
-          "price": 5.00,
+          "price": 5.0,
           "price_per_unit": "1.43 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -217,11 +282,15 @@
       "sizes": [
         {
           "size": "1kg",
-          "price": 5.90,
+          "price": 5.9,
           "price_per_unit": "0.59 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -232,11 +301,15 @@
       "sizes": [
         {
           "size": "1kg",
-          "price": 11.70,
+          "price": 11.7,
           "price_per_unit": "1.17 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -247,11 +320,15 @@
       "sizes": [
         {
           "size": "1kg",
-          "price": 4.90,
+          "price": 4.9,
           "price_per_unit": "0.49 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -262,11 +339,14 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 4.20,
+          "price": 4.2,
           "price_per_unit": "0.84 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -277,11 +357,15 @@
       "sizes": [
         {
           "size": "1kg",
-          "price": 4.90,
+          "price": 4.9,
           "price_per_unit": "0.49 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -292,11 +376,15 @@
       "sizes": [
         {
           "size": "750ml",
-          "price": 19.80,
+          "price": 19.8,
           "price_per_unit": "4.15 per 100ml"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -307,11 +395,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 2.90,
+          "price": 2.9,
           "price_per_unit": "2.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -322,11 +414,15 @@
       "sizes": [
         {
           "size": "1kg can",
-          "price": 10.00,
+          "price": 10.0,
           "price_per_unit": "1.08 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -337,11 +433,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 2.90,
+          "price": 2.9,
           "price_per_unit": "2.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -352,11 +452,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 2.90,
+          "price": 2.9,
           "price_per_unit": "2.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -367,11 +471,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 4.90,
+          "price": 4.9,
           "price_per_unit": "1.23 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -382,11 +490,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 1.90,
+          "price": 1.9,
           "price_per_unit": "1.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -397,11 +509,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 3.50,
+          "price": 3.5,
           "price_per_unit": "3.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -412,11 +528,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 4.00,
+          "price": 4.0,
           "price_per_unit": "4.00 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -427,11 +547,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "12.00 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -442,11 +566,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 6.50,
+          "price": 6.5,
           "price_per_unit": "6.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -457,11 +585,15 @@
       "sizes": [
         {
           "size": "200g bunch",
-          "price": 5.50,
+          "price": 5.5,
           "price_per_unit": "2.75 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -472,11 +604,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 2.80,
+          "price": 2.8,
           "price_per_unit": "2.80 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -487,11 +623,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 3.90,
+          "price": 3.9,
           "price_per_unit": "3.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -502,11 +642,15 @@
       "sizes": [
         {
           "size": "1 head",
-          "price": 6.00,
+          "price": 6.0,
           "price_per_unit": "6.00 per head"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -517,11 +661,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 5.50,
+          "price": 5.5,
           "price_per_unit": "5.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -532,11 +680,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 6.90,
+          "price": 6.9,
           "price_per_unit": "6.90 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -547,11 +699,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 7.50,
+          "price": 7.5,
           "price_per_unit": "7.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -562,11 +718,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "12.00 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -577,11 +737,14 @@
       "sizes": [
         {
           "size": "1 liter",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "0.85 per 100ml"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -592,11 +755,14 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 9.90,
+          "price": 9.9,
           "price_per_unit": "2.48 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -607,11 +773,14 @@
       "sizes": [
         {
           "size": "250g",
-          "price": 7.50,
+          "price": 7.5,
           "price_per_unit": "3.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -622,11 +791,14 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "7.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -637,11 +809,14 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 16.00,
+          "price": 16.0,
           "price_per_unit": "4.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -652,11 +827,14 @@
       "sizes": [
         {
           "size": "10 eggs",
-          "price": 10.50,
+          "price": 10.5,
           "price_per_unit": "1.05 per egg"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -667,11 +845,14 @@
       "sizes": [
         {
           "size": "500g loaf",
-          "price": 9.50,
+          "price": 9.5,
           "price_per_unit": "1.90 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -682,11 +863,14 @@
       "sizes": [
         {
           "size": "500g loaf",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "1.70 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -697,11 +881,14 @@
       "sizes": [
         {
           "size": "6 pitas",
-          "price": 7.00,
+          "price": 7.0,
           "price_per_unit": "1.17 per pita"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -712,11 +899,15 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 24.00,
+          "price": 24.0,
           "price_per_unit": "12.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -727,11 +918,15 @@
       "sizes": [
         {
           "size": "250g",
-          "price": 28.00,
+          "price": 28.0,
           "price_per_unit": "11.20 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -742,11 +937,15 @@
       "sizes": [
         {
           "size": "300g",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "4.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -757,11 +956,15 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 16.00,
+          "price": 16.0,
           "price_per_unit": "8.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -772,11 +975,14 @@
       "sizes": [
         {
           "size": "500g jar",
-          "price": 32.00,
+          "price": 32.0,
           "price_per_unit": "6.40 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -787,11 +993,15 @@
       "sizes": [
         {
           "size": "400g jar",
-          "price": 18.00,
+          "price": 18.0,
           "price_per_unit": "4.50 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -802,11 +1012,15 @@
       "sizes": [
         {
           "size": "400g jar",
-          "price": 16.00,
+          "price": 16.0,
           "price_per_unit": "4.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -817,11 +1031,14 @@
       "sizes": [
         {
           "size": "400ml",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "3.00 per 100ml"
         }
       ],
-      "attributes": ["vegetarian", "vegan"],
+      "attributes": [
+        "vegetarian",
+        "vegan"
+      ],
       "organic": false
     },
     {
@@ -832,11 +1049,15 @@
       "sizes": [
         {
           "size": "500ml",
-          "price": 22.00,
+          "price": 22.0,
           "price_per_unit": "4.40 per 100ml"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -847,11 +1068,15 @@
       "sizes": [
         {
           "size": "500g can",
-          "price": 6.50,
+          "price": 6.5,
           "price_per_unit": "1.30 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -862,11 +1087,15 @@
       "sizes": [
         {
           "size": "1kg",
-          "price": 3.50,
+          "price": 3.5,
           "price_per_unit": "0.35 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -877,11 +1106,15 @@
       "sizes": [
         {
           "size": "100g",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "12.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -892,11 +1125,15 @@
       "sizes": [
         {
           "size": "75g",
-          "price": 8.00,
+          "price": 8.0,
           "price_per_unit": "10.67 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -907,11 +1144,15 @@
       "sizes": [
         {
           "size": "50g",
-          "price": 7.00,
+          "price": 7.0,
           "price_per_unit": "14.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -922,11 +1163,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 15.00,
+          "price": 15.0,
           "price_per_unit": "3.75 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -937,11 +1182,15 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 18.00,
+          "price": 18.0,
           "price_per_unit": "3.60 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -952,11 +1201,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 16.00,
+          "price": 16.0,
           "price_per_unit": "4.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -967,12 +1220,17 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "8.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
-      "organic": true
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
+      "organic": true,
+      "hebrew_name": "\u05e2\u05d2\u05d1\u05e0\u05d9\u05d5\u05ea \u05d0\u05d5\u05e8\u05d2\u05e0\u05d9\u05d5\u05ea"
     },
     {
       "id": "prod_064",
@@ -982,11 +1240,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 7.50,
+          "price": 7.5,
           "price_per_unit": "7.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -997,11 +1259,15 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "7.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1012,11 +1278,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 13.50,
+          "price": 13.5,
           "price_per_unit": "13.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1027,11 +1297,15 @@
       "sizes": [
         {
           "size": "per kg",
-          "price": 11.50,
+          "price": 11.5,
           "price_per_unit": "11.50 per kg"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1042,11 +1316,14 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "2.80 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1057,11 +1334,15 @@
       "sizes": [
         {
           "size": "500ml",
-          "price": 35.00,
+          "price": 35.0,
           "price_per_unit": "7.00 per 100ml"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1072,11 +1353,15 @@
       "sizes": [
         {
           "size": "400g can",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "2.13 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1087,11 +1372,15 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "2.40 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1102,11 +1391,14 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "3.50 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": true
     },
     {
@@ -1117,11 +1409,14 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 12.00,
+          "price": 12.0,
           "price_per_unit": "6.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1132,11 +1427,14 @@
       "sizes": [
         {
           "size": "250g",
-          "price": 13.50,
+          "price": 13.5,
           "price_per_unit": "5.40 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1147,11 +1445,14 @@
       "sizes": [
         {
           "size": "200g",
-          "price": 16.00,
+          "price": 16.0,
           "price_per_unit": "8.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1162,11 +1463,14 @@
       "sizes": [
         {
           "size": "100g",
-          "price": 18.00,
+          "price": 18.0,
           "price_per_unit": "18.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1177,11 +1481,16 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 11.50,
+          "price": 11.5,
           "price_per_unit": "2.88 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
       "organic": false
     },
     {
@@ -1192,11 +1501,15 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 8.90,
+          "price": 8.9,
           "price_per_unit": "1.78 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1207,11 +1520,15 @@
       "sizes": [
         {
           "size": "400g can",
-          "price": 7.50,
+          "price": 7.5,
           "price_per_unit": "1.88 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1222,11 +1539,15 @@
       "sizes": [
         {
           "size": "400g can",
-          "price": 7.50,
+          "price": 7.5,
           "price_per_unit": "1.88 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1237,11 +1558,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 8.50,
+          "price": 8.5,
           "price_per_unit": "2.13 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1252,11 +1577,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 9.00,
+          "price": 9.0,
           "price_per_unit": "2.25 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1267,11 +1596,15 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 9.50,
+          "price": 9.5,
           "price_per_unit": "2.38 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1282,11 +1615,15 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "2.80 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1297,11 +1634,16 @@
       "sizes": [
         {
           "size": "400g",
-          "price": 14.00,
+          "price": 14.0,
           "price_per_unit": "3.50 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher",
+        "ready-to-eat"
+      ],
       "organic": false
     },
     {
@@ -1312,11 +1654,15 @@
       "sizes": [
         {
           "size": "100g",
-          "price": 9.00,
+          "price": 9.0,
           "price_per_unit": "9.00 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     },
     {
@@ -1327,11 +1673,15 @@
       "sizes": [
         {
           "size": "500g",
-          "price": 6.50,
+          "price": 6.5,
           "price_per_unit": "1.30 per 100g"
         }
       ],
-      "attributes": ["vegetarian", "vegan", "kosher"],
+      "attributes": [
+        "vegetarian",
+        "vegan",
+        "kosher"
+      ],
       "organic": false
     }
   ]

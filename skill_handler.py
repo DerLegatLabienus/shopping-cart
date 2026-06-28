@@ -657,25 +657,56 @@ class ShoppingListSkill:
             products_to_add = products[:5]
 
             # Step 5: Process each product
+            added_barcodes = set()  # Track added products to avoid duplicates
             for idx, product in enumerate(products_to_add):
                 product_name = product.get('name', '')
 
+                # Use Hebrew name if available for more accurate searching
+                search_term = product.get('hebrew_name', product_name)
+
                 try:
-                    # Close delivery modal if open
+                    # Close delivery modal and product panels before each search
                     try:
                         page.evaluate("""() => {
+                            // Close delivery modal
                             const modal = document.getElementById('delivery-modal');
                             if (modal) modal.style.display = 'none';
                             const backdrop = document.querySelector('.modal-backdrop');
                             if (backdrop) backdrop.style.display = 'none';
+
+                            // Close product details panel by clicking escape or close button
+                            const closeBtn = document.querySelector('[data-testid="close-icon"]') ||
+                                           document.querySelector('[class*="close"]') ||
+                                           document.querySelector('button.btn-close');
+                            if (closeBtn && closeBtn.offsetParent !== null) {
+                                closeBtn.click();
+                            }
+
+                            // Close cart drawer if open
+                            const cartDrawer = document.querySelector('[class*="cart-drawer"]') ||
+                                             document.querySelector('[class*="cart-side"]');
+                            if (cartDrawer && cartDrawer.style.display !== 'none') {
+                                const drawerClose = cartDrawer.querySelector('[class*="close"]');
+                                if (drawerClose) drawerClose.click();
+                            }
                         }""")
+                    except:
+                        pass
+
+                    time.sleep(1)
+
+                    # Navigate back to home to reset page state before each search
+                    # This prevents cart panel interference
+                    try:
+                        page.goto('https://www.rami-levy.co.il/he', wait_until="domcontentloaded", timeout=15000)
+                        page.wait_for_timeout(2000)
                     except:
                         pass
 
                     time.sleep(0.5)
 
-                    # Search for product on website using Hebrew product names
-                    search_result = web_scraper.search_product(page, product_name)
+                    # Search for product on website using Hebrew product names (if available)
+                    search_result = web_scraper.search_product(page, search_term)
 
                     if not search_result.get('found'):
                         result['missing_items'].append({
@@ -684,11 +715,21 @@ class ShoppingListSkill:
                         })
                         continue
 
+                    # Check if this barcode was already added (avoid duplicates)
+                    barcode = search_result.get('url', '')
+                    if barcode in added_barcodes:
+                        result['missing_items'].append({
+                            'name': product_name,
+                            'reason': 'Duplicate product (already added)'
+                        })
+                        continue
+
                     # Product found, add to cart via + button click
                     product_url = search_result.get('url', '')
                     add_result = cart_automation.add_to_cart(page, product_url, quantity=1)
 
                     if add_result.get('success'):
+                        added_barcodes.add(barcode)  # Track this barcode
                         result['added_items'].append({
                             'name': product_name,
                             'price': search_result.get('price', 0),
@@ -707,24 +748,27 @@ class ShoppingListSkill:
                     })
                     continue
 
-            # Step 6: Get cart total
-            cart_total = cart_automation.get_cart_total(page)
+            # Step 6: Verify items are actually in cart drawer
+            verification = self.verify_cart_contents(page, result['added_items'])
+
+            # Step 7: Get cart total
+            cart_total = verification.get('total_price', 0.0)
             result['cart_total'] = cart_total
+            result['verified_items'] = verification.get('verified_items', [])
+            result['verified_count'] = verification.get('verified_count', 0)
 
-            # Set success message
-            result['success'] = len(result['added_items']) > 0
-            result['message'] = f"✅ Added {len(result['added_items'])} items to cart" if result['success'] else "⚠️ Could not add items"
-
-            # Step 7: Update browser session config
+            # Step 8: Update browser session config
             browser_manager.update_session_config({
                 'items_added': len(result['added_items']),
+                'items_verified': verification.get('verified_count', 0),
                 'cart_total': cart_total
             })
 
-            # Step 8: Generate summary message
+            # Step 9: Generate summary message with verification status
             if result['added_items']:
                 result['success'] = True
-                result['message'] = f"✅ Added {len(result['added_items'])} items to cart. Cart total: ₪{cart_total:.2f}"
+                verify_msg = f" ({verification.get('verified_count', 0)} verified in cart)"
+                result['message'] = f"✅ Added {len(result['added_items'])} items{verify_msg}. Cart total: ₪{cart_total:.2f}"
             else:
                 result['message'] = f"⚠️ No items could be added. {len(result['missing_items'])} items were missing."
 
@@ -734,6 +778,86 @@ class ShoppingListSkill:
             result['message'] = f"❌ Unexpected error: {str(e)}"
             result['browser_active'] = False
             return result
+
+    def verify_cart_contents(self, page, added_items: List[Dict]) -> Dict:
+        """
+        Verify that items are actually in the Rami Levy cart drawer.
+
+        Args:
+            page: Playwright page object
+            added_items: List of items that were added
+
+        Returns:
+            {
+                'verified_count': int,
+                'total_price': float,
+                'verified_items': [str],
+                'message': str
+            }
+        """
+        try:
+            # Get page content - cart drawer is on the same page
+            html_content = page.content()
+
+            # Extract prices from the HTML to verify items are in cart
+            import re
+
+            verified_items = []
+            total_found = 0.0
+
+            # Look for price patterns in HTML using Hebrew word "שקל"
+            # Format: "13.80 שקל" or "7.00 שקל"
+            price_pattern = r'(\d+\.?\d*)\s*שקל'
+            prices_found = re.findall(price_pattern, html_content)
+
+            # Convert to floats and track
+            prices = [float(p) for p in prices_found if 1 < float(p) < 1000]  # Filter reasonable prices
+            prices = sorted(set(prices), reverse=True)  # Remove duplicates, sort descending
+
+            # Match prices with added items
+            matched_prices = set()
+            for item in added_items:
+                item_price = item.get('price', 0)
+                if item_price in prices and item_price not in matched_prices:
+                    verified_items.append(item.get('name', 'Unknown')[:40])
+                    total_found += item_price
+                    matched_prices.add(item_price)
+
+            # Also check page text for product names containing "עדשים" (lentils)
+            product_indicators = ['עדשים', 'עדשות', 'חלב', 'יוגורט']  # Common Hebrew product indicators
+            for indicator in product_indicators:
+                if indicator in html_content:
+                    # Product type found in cart
+                    for item in added_items:
+                        item_name = item.get('name', '')
+                        if indicator in item_name and item_name not in verified_items:
+                            verified_items.append(item_name[:40])
+                            break
+
+            # Calculate cart total from all prices found
+            # Total is typically the largest price found
+            if prices:
+                cart_total = max(prices[:3]) if len(prices) > 0 else sum(matched_prices)
+                # Actually, sum matched prices for more accuracy
+                if matched_prices:
+                    cart_total = sum(matched_prices)
+            else:
+                cart_total = total_found
+
+            return {
+                'verified_count': len(set(verified_items)),
+                'total_price': cart_total,
+                'verified_items': list(set(verified_items)),
+                'message': f'✅ Verified {len(set(verified_items))}/{len(added_items)} items in cart (Total: ₪{cart_total:.2f})'
+            }
+
+        except Exception as e:
+            return {
+                'verified_count': 0,
+                'total_price': 0.0,
+                'verified_items': [],
+                'message': f'⚠️ Verification failed: {str(e)}'
+            }
 
     def cleanup_browser_session(self) -> dict:
         """

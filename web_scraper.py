@@ -63,24 +63,42 @@ class WebScraper:
                 'frozen': 'קפוא',
                 'protein': 'חלבון',
                 'fruits': 'פירות',
+                'lentils': 'עדשים',
+                'chickpeas': 'חומוס',
+                'beans': 'שעועית',
+                'rice': 'אורז',
+                'bread': 'לחם',
+                'tomato': 'עגבנייה',
+                'cucumber': 'מלפפון',
+                'onion': 'בצל',
+                'garlic': 'שום',
+                'carrot': 'גזר',
+                'pepper': 'פלפל',
+                'potato': 'תפוח אדמה',
             }
 
-            # Extract first word from product_name to find translation
-            # E.g., "Milk - 3% Mahdrin" -> first word is "milk"
-            first_word = product_name.split()[0].lower() if product_name else ''
+            # Extract main product word from product_name to find translation
+            # E.g., "Red Lentils" -> check "red" and "lentils" -> find "lentils"
+            # E.g., "Milk - 3% Mahdrin" -> check "milk" -> find "milk"
+            words = product_name.lower().split()
+            search_term = product_name  # default
 
-            # Check if product_name needs translation
-            search_term = product_name
-            if first_word in translations:
-                # Use Hebrew translation for search
-                search_term = translations[first_word]
-            elif product_name.lower() in translations:
+            # Try each word in order to find a match in translations
+            for word in words:
+                # Clean up word (remove punctuation)
+                clean_word = word.strip(',-')
+                if clean_word in translations:
+                    search_term = translations[clean_word]
+                    break
+
+            # Fallback: check if full product name is in translations
+            if search_term == product_name and product_name.lower() in translations:
                 search_term = translations[product_name.lower()]
 
             # Navigate to search URL with product name query
             search_url = self.SEARCH_URL + search_term
             page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
-            page.wait_for_timeout(1000)  # Extra wait for dynamic content
+            page.wait_for_timeout(3000)  # Wait for Vue/dynamic rendering
 
             # Get page content and parse with BeautifulSoup
             html_content = page.content()
@@ -88,17 +106,24 @@ class WebScraper:
 
             # Look for product results using actual Rami Levy selectors
             # Products are divs with role="button" and id="product-BARCODE"
-            product_elements = soup.find_all(attrs={'role': 'button', 'id': lambda x: x and 'product-' in x})
+            # Filter: must have "product-" in ID and NOT have "cart-" prefix
+            product_elements = soup.find_all(attrs={'role': 'button', 'id': lambda x: x and 'product-' in x and not x.startswith('cart-')})
 
             if not product_elements:
-                # No products found
-                return {
-                    'found': False,
-                    'url': '',
-                    'name': '',
-                    'price': 0,
-                    'error': f'Product "{product_name}" not found'
-                }
+                # No products found - try fallback search
+                # Maybe products are there but with different selectors
+                all_buttons = soup.find_all(attrs={'role': 'button'})
+                product_elements = [b for b in all_buttons if b.get('id', '') and 'product-' in b.get('id', '') and not b.get('id', '').startswith('cart-')]
+
+                if not product_elements:
+                    # Still no products found
+                    return {
+                        'found': False,
+                        'url': '',
+                        'name': '',
+                        'price': 0,
+                        'error': f'Product "{product_name}" not found'
+                    }
 
             # Search for product matching the name
             product_element = None
