@@ -20,7 +20,7 @@ class WebScraper:
     """
 
     BASE_URL = "https://www.rami-levy.co.il/he"
-    SEARCH_URL = BASE_URL + "/search?s="
+    SEARCH_URL = BASE_URL + "/online/search?q="
     CART_URL = BASE_URL + "/cart"
     TIMEOUT_MS = 5000
 
@@ -65,14 +65,22 @@ class WebScraper:
                 'fruits': 'פירות',
             }
 
+            # Extract first word from product_name to find translation
+            # E.g., "Milk - 3% Mahdrin" -> first word is "milk"
+            first_word = product_name.split()[0].lower() if product_name else ''
+
             # Check if product_name needs translation
             search_term = product_name
-            if product_name.lower() in translations:
+            if first_word in translations:
+                # Use Hebrew translation for search
+                search_term = translations[first_word]
+            elif product_name.lower() in translations:
                 search_term = translations[product_name.lower()]
 
             # Navigate to search URL with product name query
             search_url = self.SEARCH_URL + search_term
             page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
+            page.wait_for_timeout(1000)  # Extra wait for dynamic content
 
             # Get page content and parse with BeautifulSoup
             html_content = page.content()
