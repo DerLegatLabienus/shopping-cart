@@ -179,21 +179,37 @@ class ChromeConnector:
 
                 return self.page
 
-            # Chrome not running - auto-launch it
-            if self.start_chrome():
-                # Try connecting again
-                ws_endpoint = self._get_ws_endpoint()
-                if ws_endpoint:
-                    playwright = sync_playwright().start()
-                    self.browser = playwright.chromium.connect(ws_endpoint)
-                    context = self.browser.new_context()
-                    self.page = context.new_page()
-                    return self.page
+            # Chrome not running - try auto-launch
+            self.start_chrome()
+            ws_endpoint = self._get_ws_endpoint()
+            if ws_endpoint:
+                playwright = sync_playwright().start()
+                self.browser = playwright.chromium.connect(ws_endpoint)
+                context = self.browser.new_context()
+                self.page = context.new_page()
+                return self.page
 
-            raise Exception("Could not connect to Chrome or launch new instance")
+            # Fallback: Use bundled Chromium (always available)
+            playwright = sync_playwright().start()
+            self.browser = playwright.chromium.launch(
+                headless=False,
+                args=[
+                    '--disable-blink-features=AutomationControlled',
+                    '--no-first-run',
+                    '--no-default-browser-check',
+                ]
+            )
+            context = self.browser.new_context(
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            )
+            self.page = context.new_page()
+            self.page.add_init_script("""
+                Object.defineProperty(navigator, 'webdriver', { get: () => false });
+            """)
+            return self.page
 
         except Exception as e:
-            raise Exception(f"Chrome connection failed: {str(e)}")
+            return None
 
     def _get_ws_endpoint(self) -> Optional[str]:
         """

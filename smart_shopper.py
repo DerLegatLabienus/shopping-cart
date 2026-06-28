@@ -41,14 +41,17 @@ class SmartShopper:
         Handles fallbacks:
         1. Connect to existing Chrome on debug port
         2. Auto-start Chrome with debugging
-        3. Use Playwright's bundled Chromium
+        3. Use Playwright's bundled Chromium (always works)
 
         Returns:
             True if connected successfully
         """
-        # connect() handles all fallbacks internally
-        self.page = self.connector.connect()
-        return self.page is not None
+        try:
+            # connect() handles all fallbacks internally
+            self.page = self.connector.connect()
+            return self.page is not None
+        except Exception as e:
+            return False
 
     def search_for_products(self, queries: List[str]) -> Dict:
         """
