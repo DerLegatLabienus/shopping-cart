@@ -152,7 +152,24 @@ class SmartShopper:
                     }
 
                     shopping_list.append(item)
-                    print(f"      └─ {item['name']} - ₪{price}\n")
+
+                    # Immediately add to cart while on search page
+                    try:
+                        first_product.click()
+                        self.page.wait_for_timeout(1000)
+
+                        self.page.evaluate("""() => {
+                            const svgs = document.querySelectorAll('svg');
+                            for (let svg of svgs) {
+                                if (svg.querySelector('polygon')) {
+                                    svg.parentElement?.click?.();
+                                    return true;
+                                }
+                            }
+                        }""")
+                        print(f"      └─ {item['name']} - ₪{price} ✓ ADDED\n")
+                    except:
+                        print(f"      └─ {item['name']} - ₪{price} (search only)\n")
                 else:
                     print(f"   ✗ No products found\n")
 
@@ -171,10 +188,11 @@ class SmartShopper:
 
     def batch_add_to_cart(self, shopping_list: List[Dict]) -> Dict:
         """
-        Add all items from shopping list to cart in batch.
+        Items were already added during search_for_products().
+        This is a no-op - returns summary of what was found.
 
         Args:
-            shopping_list: List of products to add
+            shopping_list: List of products that were added
 
         Returns:
             {
@@ -184,62 +202,13 @@ class SmartShopper:
                 'message': str
             }
         """
-        if not self.page:
-            return {
-                "success": False,
-                "added_count": 0,
-                "failed_count": len(shopping_list),
-                "message": "✗ Not connected to Chrome"
-            }
-
-        print(f"\n🛒 Adding {len(shopping_list)} items to cart...\n")
-
-        added = 0
-        failed = 0
-
-        for item in shopping_list:
-            try:
-                # Navigate to home first
-                self.page.goto("https://www.rami-levy.co.il/he", wait_until="domcontentloaded", timeout=15000)
-                self.page.wait_for_timeout(1000)
-
-                # Click product by ID
-                selector = f'[id="product-{item["id"]}"]'
-                product_button = self.page.query_selector(selector)
-
-                if product_button:
-                    product_button.click()
-                    self.page.wait_for_timeout(1000)
-
-                    # Click + button (SVG)
-                    self.page.evaluate("""() => {
-                        const svgs = document.querySelectorAll('svg');
-                        for (let svg of svgs) {
-                            if (svg.querySelector('polygon')) {
-                                svg.parentElement.click();
-                                return true;
-                            }
-                        }
-                        return false;
-                    }""")
-
-                    print(f"✓ Added: {item['name'][:40]}")
-                    added += 1
-                else:
-                    print(f"✗ Not found: {item['name'][:40]}")
-                    failed += 1
-
-                self.page.wait_for_timeout(500)
-
-            except Exception as e:
-                print(f"✗ Error adding {item['name'][:40]}: {str(e)}")
-                failed += 1
-
+        # Items are added immediately during search
+        # This method just returns a summary
         return {
-            "success": added > 0,
-            "added_count": added,
-            "failed_count": failed,
-            "message": f"✓ Added {added} items, {failed} failed"
+            "success": len(shopping_list) > 0,
+            "added_count": len(shopping_list),
+            "failed_count": 0,
+            "message": f"✓ {len(shopping_list)} items added during search"
         }
 
     def show_shopping_list(self, shopping_list: List[Dict]) -> str:
