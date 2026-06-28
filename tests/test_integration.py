@@ -17,11 +17,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 class TestIntegration:
     """Integration tests for browser automation workflow"""
 
-    def __init__(self):
-        self.passed = 0
-        self.failed = 0
-        self.tests_run = 0
-        self.cleanup_files = []
+    passed = 0
+    failed = 0
+    tests_run = 0
+    cleanup_files = []
 
     def assert_equal(self, actual, expected, test_name):
         """Assert equality and track result"""
@@ -35,7 +34,7 @@ class TestIntegration:
             print(f"  ❌ {test_name}")
             print(f"     Expected: {expected}")
             print(f"     Got: {actual}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_true(self, condition, test_name):
         """Assert condition is true"""
@@ -47,7 +46,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_false(self, condition, test_name):
         """Assert condition is false"""
@@ -59,7 +58,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_is_dict(self, value, test_name):
         """Assert value is a dictionary"""
@@ -71,7 +70,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name} (got {type(value).__name__})")
-            return False
+            raise AssertionError(test_name)
 
     def assert_is_list(self, value, test_name):
         """Assert value is a list"""
@@ -83,7 +82,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name} (got {type(value).__name__})")
-            return False
+            raise AssertionError(test_name)
 
     def assert_is_bool(self, value, test_name):
         """Assert value is a boolean"""
@@ -95,7 +94,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name} (got {type(value).__name__})")
-            return False
+            raise AssertionError(test_name)
 
     def assert_in(self, item, container, test_name):
         """Assert item is in container"""
@@ -108,7 +107,7 @@ class TestIntegration:
             self.failed += 1
             print(f"  ❌ {test_name}")
             print(f"     '{item}' not found in {container}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_not_none(self, value, test_name):
         """Assert value is not None"""
@@ -120,7 +119,7 @@ class TestIntegration:
         else:
             self.failed += 1
             print(f"  ❌ {test_name} (value is None)")
-            return False
+            raise AssertionError(test_name)
 
     def assert_dict_has_keys(self, d, keys, test_name):
         """Assert dictionary has all required keys"""
@@ -134,7 +133,7 @@ class TestIntegration:
             self.failed += 1
             print(f"  ❌ {test_name}")
             print(f"     Missing keys: {missing}")
-            return False
+            raise AssertionError(test_name)
 
     def cleanup(self):
         """Clean up temporary files"""
@@ -206,12 +205,8 @@ class TestIntegration:
             from browser_manager import BrowserManager
             from cart_automation import CartAutomation
             from skill_handler import ShoppingListSkill
-            # WebScraper requires bs4, which may not be installed
-            try:
-                from web_scraper import WebScraper
-                self.assert_true(True, "All 4 modules imported successfully")
-            except ImportError:
-                self.assert_true(True, "Core 3 modules imported (WebScraper requires bs4)")
+            from web_scraper import WebScraper
+            self.assert_true(True, "All 4 modules imported successfully")
         except ImportError as e:
             self.assert_true(False, f"Failed to import modules: {e}")
 
@@ -225,17 +220,11 @@ class TestIntegration:
             self.assert_true(False, f"BrowserManager error: {e}")
 
     def test_web_scraper_class_exists(self):
-        """Test that WebScraper class exists (skipped if bs4 not available)"""
+        """Test that WebScraper class exists"""
         print("\n3️⃣ Testing WebScraper class exists...")
         try:
             from web_scraper import WebScraper
             self.assert_true(WebScraper is not None, "WebScraper class exists")
-        except ImportError as e:
-            if 'bs4' in str(e):
-                print("  ⏭️  Skipped (bs4 not installed)")
-                self.tests_run -= 1  # Don't count skipped tests
-            else:
-                self.assert_true(False, f"WebScraper error: {e}")
         except Exception as e:
             self.assert_true(False, f"WebScraper error: {e}")
 

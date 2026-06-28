@@ -16,11 +16,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 class TestBrowserManager:
     """Test suite for BrowserManager class"""
 
-    def __init__(self):
-        self.passed = 0
-        self.failed = 0
-        self.tests_run = 0
-        self.cleanup_files = []
+    passed = 0
+    failed = 0
+    tests_run = 0
+    cleanup_files = []
 
     def assert_equal(self, actual, expected, test_name):
         """Assert equality and track result"""
@@ -34,7 +33,7 @@ class TestBrowserManager:
             print(f"  ❌ {test_name}")
             print(f"     Expected: {expected}")
             print(f"     Got: {actual}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_true(self, condition, test_name):
         """Assert condition is true"""
@@ -46,7 +45,7 @@ class TestBrowserManager:
         else:
             self.failed += 1
             print(f"  ❌ {test_name}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_false(self, condition, test_name):
         """Assert condition is false"""
@@ -58,7 +57,7 @@ class TestBrowserManager:
         else:
             self.failed += 1
             print(f"  ❌ {test_name}")
-            return False
+            raise AssertionError(test_name)
 
     def assert_is_dict(self, value, test_name):
         """Assert value is a dictionary"""
@@ -70,7 +69,7 @@ class TestBrowserManager:
         else:
             self.failed += 1
             print(f"  ❌ {test_name} (got {type(value).__name__})")
-            return False
+            raise AssertionError(test_name)
 
     def assert_in(self, item, container, test_name):
         """Assert item is in container"""
@@ -83,7 +82,7 @@ class TestBrowserManager:
             self.failed += 1
             print(f"  ❌ {test_name}")
             print(f"     '{item}' not found in {container}")
-            return False
+            raise AssertionError(test_name)
 
     def cleanup(self):
         """Clean up temporary files"""

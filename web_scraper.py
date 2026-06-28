@@ -5,7 +5,6 @@ Parses HTML with CSS selectors for product information: [data-productid], [data-
 """
 
 from typing import Dict, Optional
-from bs4 import BeautifulSoup
 
 
 class WebScraper:
@@ -50,6 +49,9 @@ class WebScraper:
             # Handle testing case: page=None returns mock data
             if page is None:
                 return self._mock_search_product(product_name)
+
+            # Method-level import to avoid module-level dependency issues
+            from bs4 import BeautifulSoup
 
             # Navigate to search URL with product name query
             search_url = self.SEARCH_URL + product_name
@@ -146,6 +148,9 @@ class WebScraper:
             # Handle testing case: page=None returns mock data
             if page is None:
                 return self._mock_get_product_details(product_url)
+
+            # Method-level import to avoid module-level dependency issues
+            from bs4 import BeautifulSoup
 
             # Navigate to product URL
             page.goto(product_url, wait_until="networkidle", timeout=self.TIMEOUT_MS)
