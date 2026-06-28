@@ -48,76 +48,102 @@ class ChromeConnector:
     def start_chrome(self) -> bool:
         """
         Start Chrome with remote debugging enabled (automatically).
+        Finds Chrome on system and launches it.
 
         Returns:
             True if started successfully
         """
         try:
-            # Chrome/Chromium paths (ordered by preference)
-            chrome_paths = [
-                "google-chrome",  # Linux (common)
-                "google-chrome-stable",  # Linux (package manager)
-                "google-chrome-beta",  # Linux (beta)
-                "chromium",  # Linux (open source)
-                "chromium-browser",  # Linux (Debian/Ubuntu)
-                r"C:\Program Files\Google\Chrome\Application\chrome.exe",  # Windows
-                r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",  # Windows 32-bit
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",  # macOS
+            import shutil
+            import os
+
+            # Try to find Chrome executable
+            chrome_path = None
+
+            # Check common paths
+            possible_paths = [
+                "google-chrome",
+                "google-chrome-stable",
+                "chromium",
+                "chromium-browser",
+                "/usr/bin/google-chrome",
+                "/usr/bin/google-chrome-stable",
+                "/usr/bin/chromium",
+                "/snap/bin/chromium",
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
             ]
 
-            chrome_path = None
-            for path in chrome_paths:
+            # Try to find Chrome using which/where
+            for cmd_name in ["google-chrome", "chromium", "google-chrome-stable"]:
                 try:
-                    # Test if chrome exists
                     result = subprocess.run(
-                        [path, "--version"],
+                        ["which", cmd_name] if os.name != "nt" else ["where", cmd_name],
                         capture_output=True,
+                        text=True,
                         timeout=2
                     )
                     if result.returncode == 0:
-                        chrome_path = path
+                        chrome_path = result.stdout.strip().split('\n')[0]
                         break
-                except (FileNotFoundError, subprocess.TimeoutExpired):
-                    continue
+                except:
+                    pass
+
+            # Check direct paths if which/where didn't work
+            if not chrome_path:
+                for path in possible_paths:
+                    try:
+                        if os.path.exists(path):
+                            chrome_path = path
+                            break
+                        # Try running it
+                        result = subprocess.run(
+                            [path, "--version"],
+                            capture_output=True,
+                            timeout=2
+                        )
+                        if result.returncode == 0:
+                            chrome_path = path
+                            break
+                    except:
+                        continue
 
             if not chrome_path:
-                print("✗ Chrome not found. Install Chrome or Chromium to use this feature")
-                return False
+                raise Exception(
+                    "Chrome not found on system. "
+                    "Please install Google Chrome or Chromium."
+                )
 
-            # Start Chrome with remote debugging
-            # Use --no-sandbox for Linux environments
+            # Start Chrome with debugging
             args = [
                 chrome_path,
                 f"--remote-debugging-port={self.debug_port}",
                 "--no-first-run",
                 "--no-default-browser-check",
-                "--start-maximized",
-                "--disable-extensions",
             ]
 
             # Add no-sandbox for Linux
-            if "linux" in subprocess.os.uname().sysname.lower() or "chrome" in chrome_path.lower():
+            if os.name != "nt":
                 args.append("--no-sandbox")
 
+            # Launch Chrome
             process = subprocess.Popen(
                 args,
                 stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
+                stderr=subprocess.DEVNULL,
+                preexec_fn=None if os.name == "nt" else os.setsid
             )
 
-            # Wait for Chrome to start and be ready
-            time.sleep(4)
+            # Wait for Chrome to be ready
+            for attempt in range(10):
+                time.sleep(1)
+                if self.check_chrome_running():
+                    return True
 
-            # Verify Chrome is running
-            if self.check_chrome_running():
-                print(f"✓ Chrome started automatically (PID: {process.pid})")
-                return True
-            else:
-                print("✗ Chrome started but not responding on debug port")
-                return False
+            return False
 
         except Exception as e:
-            print(f"✗ Error starting Chrome: {e}")
             return False
 
     def connect(self) -> Optional:
@@ -133,30 +159,38 @@ class ChromeConnector:
             # Get WebSocket endpoint from Chrome
             ws_endpoint = self._get_ws_endpoint()
 
-            if not ws_endpoint:
-                raise Exception(
-                    "Chrome not found on port 9222.\n"
-                    "Start Chrome with: chrome --remote-debugging-port=9222"
-                )
+            if ws_endpoint:
+                # Connect via WebSocket to YOUR existing Chrome
+                playwright = sync_playwright().start()
+                self.browser = playwright.chromium.connect(ws_endpoint)
 
-            # Connect via WebSocket to YOUR existing Chrome
-            playwright = sync_playwright().start()
-            self.browser = playwright.chromium.connect(ws_endpoint)
+                # Get or create page
+                contexts = self.browser.contexts
+                if contexts:
+                    context = contexts[0]
+                else:
+                    context = self.browser.new_context()
 
-            # Get or create page
-            contexts = self.browser.contexts
-            if contexts:
-                context = contexts[0]
-            else:
-                context = self.browser.new_context()
+                pages = context.pages
+                if pages:
+                    self.page = pages[0]
+                else:
+                    self.page = context.new_page()
 
-            pages = context.pages
-            if pages:
-                self.page = pages[0]
-            else:
-                self.page = context.new_page()
+                return self.page
 
-            return self.page
+            # Chrome not running - auto-launch it
+            if self.start_chrome():
+                # Try connecting again
+                ws_endpoint = self._get_ws_endpoint()
+                if ws_endpoint:
+                    playwright = sync_playwright().start()
+                    self.browser = playwright.chromium.connect(ws_endpoint)
+                    context = self.browser.new_context()
+                    self.page = context.new_page()
+                    return self.page
+
+            raise Exception("Could not connect to Chrome or launch new instance")
 
         except Exception as e:
             raise Exception(f"Chrome connection failed: {str(e)}")
