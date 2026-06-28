@@ -4,6 +4,34 @@
 
 **All code changes must be part of the skill, not standalone scripts.**
 
+## How to Use the Skill
+
+### Step 1: Start Your Chrome
+```bash
+chrome --remote-debugging-port=9222
+```
+
+### Step 2: Use the Skill
+```python
+from skill_handler import ShoppingListSkill
+
+skill = ShoppingListSkill()
+
+# Get vegetarian family shopping list and add to cart
+result = skill.shop_vegetarian_family()
+
+print(f"Added: {result['added_count']} items")
+print(f"Missing: {result['missing_count']} items")
+print(f"Total: ₪{result['total_price']}")
+```
+
+## Key Implementation Details
+
+- **Hebrew Website**: All search queries are automatically translated to Hebrew
+- **Your Chrome**: Uses your existing Chrome browser session (no headless, no detection issues)
+- **Persistent Session**: Your login and cart remain intact
+- **Batch Operations**: Builds shopping list first, then adds all items at once
+
 ### What This Means
 
 ✅ **DO:**
