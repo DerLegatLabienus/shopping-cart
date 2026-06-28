@@ -34,12 +34,12 @@ class WebScraper:
 
         Args:
             page: Playwright page object (or None for mock data in testing)
-            product_name: Name of product to search for
+            product_name: Name of product to search for (English or Hebrew)
 
         Returns:
             {
                 'found': bool,           # Whether product was found
-                'url': str,              # Product URL (empty if not found)
+                'url': str,              # Product ID (empty if not found)
                 'name': str,             # Product name (empty if not found)
                 'price': float,          # Product price (0 if not found)
                 'error': str             # Error message (empty if success)
@@ -53,8 +53,25 @@ class WebScraper:
             # Method-level import to avoid module-level dependency issues
             from bs4 import BeautifulSoup
 
+            # Translate common English product names to Hebrew for search
+            translations = {
+                'milk': 'חלב',
+                'yogurt': 'יוגורט',
+                'cheese': 'גבינה',
+                'eggs': 'ביצים',
+                'vegetables': 'ירקות',
+                'frozen': 'קפוא',
+                'protein': 'חלבון',
+                'fruits': 'פירות',
+            }
+
+            # Check if product_name needs translation
+            search_term = product_name
+            if product_name.lower() in translations:
+                search_term = translations[product_name.lower()]
+
             # Navigate to search URL with product name query
-            search_url = self.SEARCH_URL + product_name
+            search_url = self.SEARCH_URL + search_term
             page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
 
             # Get page content and parse with BeautifulSoup
@@ -107,23 +124,29 @@ class WebScraper:
             if not product_id:
                 product_id = product_name  # Fallback to search term
 
-            # Extract product name from h3 or text content
-            name_element = product_element.find('h3')
-            product_name_found = name_element.get_text(strip=True) if name_element else product_name
+            # Extract product name and price from full text content
+            # Format: "חלב 3% מהדריןתנובה|1 ליטרמחיר המוצר7.20₪7.20שקלים חדשים..."
+            full_text = product_element.get_text(strip=True)
 
-            # Extract price from product-price-wrap class
+            # Extract price: look for ₪ followed by numbers
+            import re
             price = 0
-            price_wrap = product_element.find(class_='product-price-wrap')
-            if price_wrap:
-                # Look for price text (usually in a span with currency symbol)
-                price_elem = price_wrap.find(string=lambda x: x and '₪' in str(x))
-                if price_elem:
-                    price_text = str(price_elem).strip()
-                    try:
-                        # Remove currency symbols and parse
-                        price = float(''.join(c for c in price_text if c.isdigit() or c == '.'))
-                    except (ValueError, AttributeError):
-                        price = 0
+            price_match = re.search(r'₪\s*([\d.]+)', full_text)
+            if price_match:
+                try:
+                    price = float(price_match.group(1))
+                except (ValueError, AttributeError):
+                    price = 0
+
+            # Extract product name: take text before first | or before "מחיר"
+            product_name_found = product_name  # Default
+            if '|' in full_text:
+                product_name_found = full_text.split('|')[0].strip()
+            elif 'מחיר' in full_text:
+                product_name_found = full_text.split('מחיר')[0].strip()
+            else:
+                # Use first 50 chars as name
+                product_name_found = full_text[:50]
 
             return {
                 'found': True,
