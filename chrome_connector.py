@@ -133,51 +133,33 @@ class ChromeConnector:
             # Get WebSocket endpoint from Chrome
             ws_endpoint = self._get_ws_endpoint()
 
-            if ws_endpoint:
-                # Connect via WebSocket to existing Chrome
-                playwright = sync_playwright().start()
-                self.browser = playwright.chromium.connect(ws_endpoint)
+            if not ws_endpoint:
+                raise Exception(
+                    "Chrome not found on port 9222.\n"
+                    "Start Chrome with: chrome --remote-debugging-port=9222"
+                )
 
-                # Get or create page
-                contexts = self.browser.contexts
-                if contexts:
-                    context = contexts[0]
-                else:
-                    context = self.browser.new_context()
-
-                pages = context.pages
-                if pages:
-                    self.page = pages[0]
-                else:
-                    self.page = context.new_page()
-
-                return self.page
-
-            # Fallback: Use Playwright's bundled Chromium (always available)
+            # Connect via WebSocket to YOUR existing Chrome
             playwright = sync_playwright().start()
-            self.browser = playwright.chromium.launch(
-                headless=False,
-                args=[
-                    '--disable-blink-features=AutomationControlled',
-                    '--no-first-run',
-                    '--no-default-browser-check',
-                ]
-            )
+            self.browser = playwright.chromium.connect(ws_endpoint)
 
-            context = self.browser.new_context(
-                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            )
-            self.page = context.new_page()
+            # Get or create page
+            contexts = self.browser.contexts
+            if contexts:
+                context = contexts[0]
+            else:
+                context = self.browser.new_context()
 
-            # Inject stealth
-            self.page.add_init_script("""
-                Object.defineProperty(navigator, 'webdriver', { get: () => false });
-            """)
+            pages = context.pages
+            if pages:
+                self.page = pages[0]
+            else:
+                self.page = context.new_page()
 
             return self.page
 
         except Exception as e:
-            return None
+            raise Exception(f"Chrome connection failed: {str(e)}")
 
     def _get_ws_endpoint(self) -> Optional[str]:
         """

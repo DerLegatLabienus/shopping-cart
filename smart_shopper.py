@@ -75,15 +75,33 @@ class SmartShopper:
 
         print(f"🔍 Searching for products using YOUR Chrome browser...\n")
 
+        # Hebrew translations for search
+        translations = {
+            'milk': 'חלב',
+            'yogurt': 'יוגורט',
+            'cheese': 'גבינה',
+            'bread': 'לחם',
+            'eggs': 'ביצים',
+            'lentils': 'עדשים',
+            'chickpeas': 'חומוס',
+            'tomatoes': 'עגבניות',
+            'onions': 'בצל',
+            'vegetables': 'ירקות',
+            'fruits': 'פירות',
+            'pita': 'פיתה',
+        }
+
         shopping_list = []
         base_url = "https://www.rami-levy.co.il/he"
 
         for query in queries:
-            print(f"Searching: {query}...")
+            # Translate to Hebrew if available
+            search_term = translations.get(query.lower(), query)
+            print(f"Searching: {query} ({search_term})...")
 
             try:
-                # Navigate to search page
-                search_url = f"{base_url}/online/search?q={query}"
+                # Navigate to search page with Hebrew query
+                search_url = f"{base_url}/online/search?q={search_term}"
                 self.page.goto(search_url, wait_until="networkidle", timeout=15000)
 
                 # Wait for products to load (Vue.js needs time to render)
