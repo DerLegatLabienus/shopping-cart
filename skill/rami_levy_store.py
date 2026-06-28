@@ -5,6 +5,7 @@ from typing import Dict, List, Optional
 from product_cache import ProductCache
 from search_engine import SearchEngine
 from store import Cart, CartItem, Product, SearchFilters, Store
+from hebrew_translator import HebrewTranslator
 
 
 class RamiLevyStore(Store):
@@ -13,6 +14,7 @@ class RamiLevyStore(Store):
         path = cache_path or os.path.join(module_dir, "rami_levy_products.json")
         self.cache = ProductCache(path, ttl_seconds=cache_ttl)
         self.search_engine = SearchEngine(path)
+        self.translator = HebrewTranslator()
         self._shopper = None
 
     def search(self, filters: SearchFilters) -> List[Product]:
@@ -34,7 +36,9 @@ class RamiLevyStore(Store):
         if not raw:
             raise ValueError(f"Product not found: {product_id}")
         shopper = self._get_shopper()
-        shopper.search_for_products([raw["name"]])
+        # Translate product name to Hebrew before searching on website
+        hebrew_name = self.translator.translate(raw["name"])
+        shopper.search_for_products([hebrew_name])
         return CartItem(product=self._to_product(raw), quantity=quantity)
 
     def get_cart(self) -> Cart:

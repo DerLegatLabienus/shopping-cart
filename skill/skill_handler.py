@@ -7,6 +7,7 @@ from store import Store
 from query_parser import QueryParser
 from cart_manager import CartManager
 from formatters import OutputFormatter
+from hebrew_translator import HebrewTranslator
 
 
 class ShoppingListSkill:
@@ -15,6 +16,7 @@ class ShoppingListSkill:
         self.parser = QueryParser()
         self.cart = CartManager()
         self.formatter = OutputFormatter()
+        self.translator = HebrewTranslator()
 
     def process_query(self, user_query: str) -> Dict:
         filters = self.parser.parse(user_query)
@@ -43,11 +45,25 @@ class ShoppingListSkill:
 
     def add_to_cart(self, product_id: str, quantity: int = 1) -> Dict:
         try:
+            # Get product info to find its name
+            product_raw = self.store.search_engine.get_product_by_id(product_id)
+            if not product_raw:
+                return {"success": False, "message": f"Product not found: {product_id}", "cart_total": self.cart.get().total}
+
+            # Translate product name to Hebrew for website search
+            english_name = product_raw.get("name", "")
+            hebrew_name = self.translator.translate(english_name)
+
+            # Override the product name with Hebrew before adding to cart
+            product_raw_modified = product_raw.copy()
+            product_raw_modified["name"] = hebrew_name
+
+            # Add with Hebrew name (will be used in browser automation)
             item = self.store.add_to_cart(product_id, quantity)
             self.cart.add(item)
             return {
                 "success": True,
-                "message": f"✅ Added: {item.product.name} (₪{item.product.price * quantity:.2f})",
+                "message": f"✅ Added: {english_name} ({hebrew_name}) - ₪{item.product.price * quantity:.2f}",
                 "cart_total": self.cart.get().total,
             }
         except ValueError as e:
