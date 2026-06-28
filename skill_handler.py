@@ -11,6 +11,10 @@ import json
 
 
 class ShoppingListSkill:
+    # Class-level browser instance for persistence across method calls
+    _persistent_browser_manager = None
+    _persistent_page = None
+
     def __init__(self, products_db: str = "rami_levy_products.json"):
         """Initialize the skill with search engine and formatters"""
         self.search_engine = SearchEngine(products_db)
@@ -857,6 +861,247 @@ class ShoppingListSkill:
                 'total_price': 0.0,
                 'verified_items': [],
                 'message': f'⚠️ Verification failed: {str(e)}'
+            }
+
+    def open_persistent_browser(self) -> Dict:
+        """
+        Open a persistent browser that stays open for shopping.
+        Browser can be reused for multiple add_to_cart calls.
+
+        Returns:
+            {
+                'success': bool,
+                'message': str,
+                'browser_active': bool
+            }
+        """
+        try:
+            from browser_manager import BrowserManager
+        except ImportError:
+            return {
+                'success': False,
+                'message': '❌ Failed to import BrowserManager',
+                'browser_active': False
+            }
+
+        try:
+            # Close existing browser if any
+            if ShoppingListSkill._persistent_browser_manager:
+                try:
+                    ShoppingListSkill._persistent_browser_manager.close_browser()
+                except:
+                    pass
+
+            # Open new persistent browser
+            manager = BrowserManager()
+            result = manager.open_browser()
+
+            if result.get('success'):
+                ShoppingListSkill._persistent_browser_manager = manager
+                ShoppingListSkill._persistent_page = manager.page
+
+                return {
+                    'success': True,
+                    'message': '✅ Browser opened and ready for shopping! Use "continue shopping" to add items.',
+                    'browser_active': True
+                }
+            else:
+                return {
+                    'success': False,
+                    'message': f"❌ Failed to open browser: {result.get('message')}",
+                    'browser_active': False
+                }
+
+        except Exception as e:
+            return {
+                'success': False,
+                'message': f'❌ Error opening browser: {str(e)}',
+                'browser_active': False
+            }
+
+    def continue_shopping(self, query: str) -> Dict:
+        """
+        Add items to cart using the persistent browser session.
+        Browser stays open between calls for continuous shopping.
+
+        Args:
+            query: Shopping query (e.g., "milk bread" or "lentils")
+
+        Returns:
+            {
+                'success': bool,
+                'added_items': [...],
+                'cart_total': float,
+                'browser_active': bool,
+                'message': str
+            }
+        """
+        # Check if browser is still open
+        if not ShoppingListSkill._persistent_browser_manager or not ShoppingListSkill._persistent_page:
+            return {
+                'success': False,
+                'added_items': [],
+                'cart_total': 0.0,
+                'browser_active': False,
+                'message': '❌ Browser not open. Use "open shopping" first.'
+            }
+
+        try:
+            from web_scraper import WebScraper
+            from cart_automation import CartAutomation
+            import time
+
+            page = ShoppingListSkill._persistent_page
+
+            # Process query to get products
+            query_result = self.process_query(query)
+            products = query_result.get('products', [])
+
+            if not products:
+                return {
+                    'success': False,
+                    'added_items': [],
+                    'cart_total': 0.0,
+                    'browser_active': True,
+                    'message': f"❌ No products found for: {query}"
+                }
+
+            # Initialize modules
+            web_scraper = WebScraper()
+            cart_automation = CartAutomation()
+
+            result = {
+                'success': False,
+                'added_items': [],
+                'missing_items': [],
+                'cart_total': 0.0,
+                'browser_active': True,
+                'message': ''
+            }
+
+            products_to_add = products[:5]
+            added_barcodes = set()
+
+            # Add products
+            for idx, product in enumerate(products_to_add):
+                product_name = product.get('name', '')
+                search_term = product.get('hebrew_name', product_name)
+
+                try:
+                    # Close modals
+                    try:
+                        page.evaluate("""() => {
+                            const modal = document.getElementById('delivery-modal');
+                            if (modal) modal.style.display = 'none';
+                            const backdrop = document.querySelector('.modal-backdrop');
+                            if (backdrop) backdrop.style.display = 'none';
+                        }""")
+                    except:
+                        pass
+
+                    time.sleep(0.5)
+
+                    # Search
+                    search_result = web_scraper.search_product(page, search_term)
+
+                    if not search_result.get('found'):
+                        result['missing_items'].append({
+                            'name': product_name,
+                            'reason': search_result.get('error', 'Product not found')
+                        })
+                        continue
+
+                    # Check for duplicate
+                    barcode = search_result.get('url', '')
+                    if barcode in added_barcodes:
+                        result['missing_items'].append({
+                            'name': product_name,
+                            'reason': 'Duplicate product (already added)'
+                        })
+                        continue
+
+                    # Add to cart
+                    add_result = cart_automation.add_to_cart(page, barcode, quantity=1)
+
+                    if add_result.get('success'):
+                        added_barcodes.add(barcode)
+                        result['added_items'].append({
+                            'name': product_name,
+                            'price': search_result.get('price', 0),
+                            'quantity': 1
+                        })
+                    else:
+                        result['missing_items'].append({
+                            'name': product_name,
+                            'reason': add_result.get('message', 'Failed to add to cart')
+                        })
+
+                except Exception as e:
+                    result['missing_items'].append({
+                        'name': product_name,
+                        'reason': str(e)
+                    })
+                    continue
+
+            # Verify items in cart
+            verification = self.verify_cart_contents(page, result['added_items'])
+
+            result['cart_total'] = verification.get('total_price', 0.0)
+            result['verified_items'] = verification.get('verified_items', [])
+            result['verified_count'] = verification.get('verified_count', 0)
+
+            # Update session
+            manager = ShoppingListSkill._persistent_browser_manager
+            manager.update_session_config({
+                'items_added': len(result['added_items']),
+                'items_verified': verification.get('verified_count', 0),
+                'cart_total': result['cart_total']
+            })
+
+            # Set success
+            result['success'] = len(result['added_items']) > 0
+            result['message'] = f"✅ Added {len(result['added_items'])} items. Cart: ₪{result['cart_total']:.2f}"
+
+            return result
+
+        except Exception as e:
+            return {
+                'success': False,
+                'added_items': [],
+                'cart_total': 0.0,
+                'browser_active': True,
+                'message': f'❌ Error: {str(e)}'
+            }
+
+    def stop_shopping(self) -> Dict:
+        """
+        Close the persistent browser session when done shopping.
+
+        Returns:
+            {
+                'success': bool,
+                'message': str
+            }
+        """
+        if not ShoppingListSkill._persistent_browser_manager:
+            return {
+                'success': False,
+                'message': '❌ No browser session to close'
+            }
+
+        try:
+            result = ShoppingListSkill._persistent_browser_manager.close_browser()
+            ShoppingListSkill._persistent_browser_manager = None
+            ShoppingListSkill._persistent_page = None
+
+            return {
+                'success': True,
+                'message': '✅ Browser closed. Your cart is saved on Rami Levy website.'
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'message': f'❌ Error closing browser: {str(e)}'
             }
 
     def cleanup_browser_session(self) -> dict:
