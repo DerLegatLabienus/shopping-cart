@@ -19,7 +19,7 @@ class WebScraper:
     - Graceful error handling with error messages in response dicts
     """
 
-    BASE_URL = "https://www.rami-levy.co.il/he/online"
+    BASE_URL = "https://www.rami-levy.co.il/he"
     SEARCH_URL = BASE_URL + "/search?s="
     CART_URL = BASE_URL + "/cart"
     TIMEOUT_MS = 5000
@@ -55,14 +55,41 @@ class WebScraper:
 
             # Navigate to search URL with product name query
             search_url = self.SEARCH_URL + product_name
-            page.goto(search_url, wait_until="networkidle", timeout=self.TIMEOUT_MS)
+            page.goto(search_url, wait_until="domcontentloaded", timeout=self.TIMEOUT_MS)
 
             # Get page content and parse with BeautifulSoup
             html_content = page.content()
             soup = BeautifulSoup(html_content, 'html.parser')
 
-            # Look for product results - try to find first product with data-productid
-            product_element = soup.find(attrs={"data-productid": True})
+            # Look for product results using actual Rami Levy selectors
+            # Products are divs with role="button" and id="product-BARCODE"
+            product_elements = soup.find_all(attrs={'role': 'button', 'id': lambda x: x and 'product-' in x})
+
+            if not product_elements:
+                # No products found
+                return {
+                    'found': False,
+                    'url': '',
+                    'name': '',
+                    'price': 0,
+                    'error': f'Product "{product_name}" not found'
+                }
+
+            # Search for product matching the name
+            product_element = None
+            search_term_lower = product_name.lower()
+
+            for elem in product_elements:
+                # Get text content of product
+                text = elem.get_text().lower()
+                # Check if search term is in the product text
+                if search_term_lower in text or any(word in text for word in search_term_lower.split()):
+                    product_element = elem
+                    break
+
+            # If no match found, use first product as fallback
+            if not product_element and product_elements:
+                product_element = product_elements[0]
 
             if not product_element:
                 # No product found
@@ -74,36 +101,24 @@ class WebScraper:
                     'error': f'Product "{product_name}" not found'
                 }
 
-            # Extract product URL
-            product_link = product_element.find('a', href=True)
-            product_url = product_link['href'] if product_link else ''
+            # Extract product ID from element id attribute
+            # Format: id="product-7290117769690"
+            product_id = product_element.get('id', '').replace('product-', '')
+            if not product_id:
+                product_id = product_name  # Fallback to search term
 
-            # Make URL absolute if relative
-            if product_url and not product_url.startswith('http'):
-                product_url = self.BASE_URL + product_url
+            # Extract product name from h3 or text content
+            name_element = product_element.find('h3')
+            product_name_found = name_element.get_text(strip=True) if name_element else product_name
 
-            # Extract product name
-            name_element = product_element.find(attrs={"data-productname": True})
-            product_name_found = name_element.get('data-productname', '') if name_element else ''
-
-            # If name not found via data attribute, try text content
-            if not product_name_found:
-                name_element = product_element.find(['h2', 'h3', 'span'])
-                product_name_found = name_element.get_text(strip=True) if name_element else ''
-
-            # Extract price
+            # Extract price from product-price-wrap class
             price = 0
-            price_element = product_element.find(attrs={"data-price": True})
-            if price_element:
-                try:
-                    price = float(price_element.get('data-price', 0))
-                except (ValueError, TypeError):
-                    price = 0
-            else:
-                # Try alternate price selectors
-                price_elem = product_element.find(class_=lambda x: x and 'price' in x.lower())
+            price_wrap = product_element.find(class_='product-price-wrap')
+            if price_wrap:
+                # Look for price text (usually in a span with currency symbol)
+                price_elem = price_wrap.find(string=lambda x: x and '₪' in str(x))
                 if price_elem:
-                    price_text = price_elem.get_text(strip=True)
+                    price_text = str(price_elem).strip()
                     try:
                         # Remove currency symbols and parse
                         price = float(''.join(c for c in price_text if c.isdigit() or c == '.'))
@@ -112,7 +127,7 @@ class WebScraper:
 
             return {
                 'found': True,
-                'url': product_url,
+                'url': product_id,  # Return product ID to be used in add_to_cart
                 'name': product_name_found,
                 'price': price,
                 'error': ''

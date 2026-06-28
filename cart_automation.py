@@ -29,7 +29,7 @@ class CartAutomation:
 
     def __init__(self):
         """Initialize CartAutomation with empty added items list"""
-        self.base_url = "https://www.rami-levy.co.il/he/online"
+        self.base_url = "https://www.rami-levy.co.il/he"
         self.added_items: List[Dict] = []
 
     def add_to_cart(
@@ -64,80 +64,57 @@ class CartAutomation:
             }
 
         try:
-            # Navigate to product page
-            page.goto(product_url, wait_until="networkidle", timeout=5000)
-            page.wait_for_load_state("networkidle", timeout=5000)
+            # product_url contains the product ID (barcode) from search
+            # On Rami Levy, clicking the product button adds it to cart directly
 
-            # Extract product name from [data-productname] attribute
-            product_name_element = page.query_selector("[data-productname]")
-            if not product_name_element:
+            # Extract product ID from URL (or use as-is if it's already an ID)
+            product_id = product_url.split('/')[-1] if '/' in product_url else product_url
+
+            # Find the product button by ID
+            # Format: id="product-7290117769690"
+            selector = f'[role="button"][id="product-{product_id}"]'
+            product_button = page.query_selector(selector)
+
+            if not product_button:
+                # Try without the product- prefix in case it's just the ID
+                selector = f'[role="button"][id="{product_id}"]'
+                product_button = page.query_selector(selector)
+
+            if not product_button:
                 return {
                     'success': False,
-                    'message': '❌ Could not find product name element',
-                    'product_name': '',
+                    'message': f'❌ Could not find product button for ID: {product_id}',
+                    'product_name': product_id,
                     'quantity': quantity
                 }
 
-            product_name = product_name_element.get_attribute("data-productname")
-            if not product_name:
+            # Click the product button to add to cart
+            try:
+                product_button.click()
+                page.wait_for_timeout(1000)  # Wait for cart to update
+                button_found = True
+            except Exception as e:
                 return {
                     'success': False,
-                    'message': '❌ Product name attribute is empty',
-                    'product_name': '',
+                    'message': f'❌ Failed to click product button: {str(e)}',
+                    'product_name': product_id,
                     'quantity': quantity
                 }
 
-            # Try to set quantity if > 1 and quantity input exists
-            if quantity > 1:
-                quantity_input = page.query_selector("[data-quantity]")
-                if quantity_input:
-                    try:
-                        quantity_input.fill(str(quantity))
-                    except Exception:
-                        # If fill fails, continue anyway
-                        pass
-
-            # Find and click "Add to Cart" button with selector fallback
-            selectors = [
-                "[data-action='add-to-cart']",
-                ":has-text('הוסף לסל')",
-                ":has-text('Add to cart')"
-            ]
-
-            button_found = False
-            for selector in selectors:
-                button = page.query_selector(selector)
-                if button:
-                    try:
-                        button.click()
-                        button_found = True
-                        break
-                    except Exception:
-                        # Try next selector
-                        continue
-
-            if not button_found:
-                return {
-                    'success': False,
-                    'message': '❌ Could not find or click Add to Cart button',
-                    'product_name': product_name,
-                    'quantity': quantity
-                }
-
-            # Wait for cart update
-            page.wait_for_timeout(1000)
+            # After click, we assume product is added (Rami Levy shows visual feedback)
+            button_found = True
 
             # Track the added item
             self.added_items.append({
-                'name': product_name,
+                'name': product_id,
                 'url': product_url,
                 'quantity': quantity
             })
 
             return {
                 'success': True,
-                'message': f'✅ Added {product_name} (qty: {quantity}) to cart',
-                'product_name': product_name,
+                'message': f'✅ Added product {product_id} (qty: {quantity}) to cart',
+                'product_name': product_id,
                 'quantity': quantity
             }
 

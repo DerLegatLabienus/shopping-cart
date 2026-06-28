@@ -1,0 +1,557 @@
+{
+  "metadata": {
+    "list_name": "Optimized Vegetarian Shopping List - Rami Levy",
+    "budget_target": 500.00,
+    "estimated_total": 372.45,
+    "remaining_budget": 127.55,
+    "total_items": 36,
+    "currency": "ILS",
+    "generated_date": "2026-06-28",
+    "criteria": {
+      "dietary": "Vegetarian",
+      "shelf_life": "Short to Medium Duration",
+      "exclude": ["Fruits"],
+      "focus": ["Vegetables", "Legumes", "Dairy", "Grains"]
+    }
+  },
+  "items_in_cart": [
+    {
+      "product_id": "existing_1",
+      "name": "Milk - 3% Mahdrin",
+      "category": "dairy",
+      "size": "1 liter",
+      "price": 8.50,
+      "quantity": 1,
+      "subtotal": 8.50,
+      "status": "Already in cart"
+    },
+    {
+      "product_id": "existing_2",
+      "name": "Tomatoes - Fresh",
+      "category": "vegetables",
+      "size": "per kg",
+      "price": 2.90,
+      "quantity": 1,
+      "subtotal": 2.90,
+      "status": "Already in cart (partial)"
+    }
+  ],
+  "shopping_list": [
+    {
+      "category": "vegetables",
+      "items": [
+        {
+          "product_id": "prod_019",
+          "name": "Tomatoes - Fresh",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 2.90,
+          "quantity": 3.5,
+          "unit": "kg",
+          "subtotal": 10.15,
+          "shelf_life": "3-5 days",
+          "uses": "Salads, cooking, sauces"
+        },
+        {
+          "product_id": "prod_021",
+          "name": "Cucumber - Green",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 2.90,
+          "quantity": 2,
+          "unit": "kg",
+          "subtotal": 5.80,
+          "shelf_life": "4-7 days",
+          "uses": "Salads, snacks, pickling"
+        },
+        {
+          "product_id": "prod_025",
+          "name": "Onion - Yellow",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 3.50,
+          "quantity": 3,
+          "unit": "kg",
+          "subtotal": 10.50,
+          "shelf_life": "2-4 weeks",
+          "uses": "Cooking base, soups, stews"
+        },
+        {
+          "product_id": "prod_030",
+          "name": "Carrots",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 2.80,
+          "quantity": 3,
+          "unit": "kg",
+          "subtotal": 8.40,
+          "shelf_life": "2-4 weeks",
+          "uses": "Cooking, salads, snacks"
+        },
+        {
+          "product_id": "prod_029",
+          "name": "Spinach",
+          "brand": "Local",
+          "size": "200g bunch",
+          "price_per_unit": 5.50,
+          "quantity": 2,
+          "unit": "bunches",
+          "subtotal": 11.00,
+          "shelf_life": "3-5 days",
+          "uses": "Salads, cooking, omelets"
+        },
+        {
+          "product_id": "prod_028",
+          "name": "Bell Peppers - Mixed",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 6.50,
+          "quantity": 2,
+          "unit": "kg",
+          "subtotal": 13.00,
+          "shelf_life": "5-7 days",
+          "uses": "Stir-fries, salads, cooking"
+        },
+        {
+          "product_id": "prod_031",
+          "name": "Zucchini",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 3.90,
+          "quantity": 2,
+          "unit": "kg",
+          "subtotal": 7.80,
+          "shelf_life": "5-7 days",
+          "uses": "Grilling, stir-fries, soup"
+        },
+        {
+          "product_id": "prod_027",
+          "name": "Garlic",
+          "brand": "Local",
+          "size": "per kg",
+          "price_per_unit": 12.00,
+          "quantity": 0.25,
+          "unit": "kg",
+          "subtotal": 3.00,
+          "shelf_life": "2-3 weeks",
+          "uses": "Seasoning, cooking"
+        },
+        {
+          "product_id": "prod_023",
+          "name": "Mushrooms - Sliced",
+          "brand": "Villifood",
+          "size": "400g",
+          "price_per_unit": 4.90,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 4.90,
+          "shelf_life": "3-5 days",
+          "uses": "Cooking, stir-fries, omelets"
+        }
+      ],
+      "category_total": 74.55
+    },
+    {
+      "category": "legumes",
+      "items": [
+        {
+          "product_id": "prod_001",
+          "name": "Red Lentils",
+          "brand": "Rami Levy",
+          "size": "1kg",
+          "price_per_unit": 13.80,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 13.80,
+          "shelf_life": "6-12 months",
+          "uses": "Soups, curry, stews (cooks in 20 min)"
+        },
+        {
+          "product_id": "prod_002",
+          "name": "Green Lentils",
+          "brand": "Rami Levy",
+          "size": "500g",
+          "price_per_unit": 7.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 7.00,
+          "shelf_life": "6-12 months",
+          "uses": "Salads, soups (cooks in 25-30 min)"
+        },
+        {
+          "product_id": "prod_078",
+          "name": "Chickpea Grains - Dry",
+          "brand": "Rami Levy",
+          "size": "500g",
+          "price_per_unit": 8.90,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 8.90,
+          "shelf_life": "6-12 months",
+          "uses": "Hummus, curry, soups (soak overnight)"
+        },
+        {
+          "product_id": "prod_005",
+          "name": "Hummus - Regular",
+          "brand": "Rami Levy",
+          "size": "700g",
+          "price_per_unit": 10.50,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 10.50,
+          "shelf_life": "1-2 weeks",
+          "uses": "Ready-to-eat, dips, spreads"
+        },
+        {
+          "product_id": "prod_079",
+          "name": "Kidney Beans - Canned",
+          "brand": "Various",
+          "size": "400g can",
+          "price_per_unit": 7.50,
+          "quantity": 2,
+          "unit": "cans",
+          "subtotal": 15.00,
+          "shelf_life": "1-2 years",
+          "uses": "Salads, soups, curry (ready-to-use)"
+        },
+        {
+          "product_id": "prod_080",
+          "name": "Black Beans - Canned",
+          "brand": "Various",
+          "size": "400g can",
+          "price_per_unit": 7.50,
+          "quantity": 1,
+          "unit": "can",
+          "subtotal": 7.50,
+          "shelf_life": "1-2 years",
+          "uses": "Soups, stews (ready-to-use)"
+        }
+      ],
+      "category_total": 62.70
+    },
+    {
+      "category": "dairy",
+      "items": [
+        {
+          "product_id": "prod_037",
+          "name": "Milk - 3% Mahdrin",
+          "brand": "Mahdrin",
+          "size": "1 liter",
+          "price_per_unit": 8.50,
+          "quantity": 2,
+          "unit": "liters",
+          "subtotal": 17.00,
+          "shelf_life": "5-7 days",
+          "uses": "Drinking, cooking, cereals"
+        },
+        {
+          "product_id": "prod_038",
+          "name": "Greek Yogurt",
+          "brand": "Various",
+          "size": "400g",
+          "price_per_unit": 9.90,
+          "quantity": 2,
+          "unit": "containers",
+          "subtotal": 19.80,
+          "shelf_life": "1-2 weeks",
+          "uses": "Breakfast, desserts, cooking"
+        },
+        {
+          "product_id": "prod_039",
+          "name": "Cottage Cheese",
+          "brand": "Various",
+          "size": "250g",
+          "price_per_unit": 7.50,
+          "quantity": 1,
+          "unit": "container",
+          "subtotal": 7.50,
+          "shelf_life": "1 week",
+          "uses": "Breakfast, desserts, salads"
+        },
+        {
+          "product_id": "prod_042",
+          "name": "Eggs - Pack of 10",
+          "brand": "Various",
+          "size": "10 eggs",
+          "price_per_unit": 10.50,
+          "quantity": 2,
+          "unit": "packs",
+          "subtotal": 21.00,
+          "shelf_life": "3-4 weeks",
+          "uses": "Breakfast, baking, omelets"
+        },
+        {
+          "product_id": "prod_073",
+          "name": "Feta Cheese",
+          "brand": "Various",
+          "size": "200g",
+          "price_per_unit": 12.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 12.00,
+          "shelf_life": "1-2 weeks",
+          "uses": "Salads, cooking, Mediterranean dishes"
+        },
+        {
+          "product_id": "prod_041",
+          "name": "White Cheese",
+          "brand": "Various",
+          "size": "400g",
+          "price_per_unit": 16.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 16.00,
+          "shelf_life": "1-2 weeks",
+          "uses": "Cooking, sandwiches, salads"
+        }
+      ],
+      "category_total": 93.30
+    },
+    {
+      "category": "bread_and_grains",
+      "items": [
+        {
+          "product_id": "prod_043",
+          "name": "Whole Wheat Bread",
+          "brand": "Various",
+          "size": "500g loaf",
+          "price_per_unit": 9.50,
+          "quantity": 1,
+          "unit": "loaf",
+          "subtotal": 9.50,
+          "shelf_life": "3-4 days",
+          "uses": "Breakfast, sandwiches, lunch"
+        },
+        {
+          "product_id": "prod_045",
+          "name": "Pita Bread",
+          "brand": "Various",
+          "size": "6 pitas",
+          "price_per_unit": 7.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 7.00,
+          "shelf_life": "3-4 days",
+          "uses": "Mediterranean meals, wraps"
+        },
+        {
+          "product_id": "prod_016",
+          "name": "Pasta - Fusilli",
+          "brand": "Rami Levy",
+          "size": "500g",
+          "price_per_unit": 4.20,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 4.20,
+          "shelf_life": "6-12 months",
+          "uses": "Main dishes, salads"
+        },
+        {
+          "product_id": "prod_011",
+          "name": "Couscous (Fine)",
+          "brand": "Rami Levy",
+          "size": "box",
+          "price_per_unit": 5.00,
+          "quantity": 1,
+          "unit": "box",
+          "subtotal": 5.00,
+          "shelf_life": "6-12 months",
+          "uses": "Quick side dish (5 min)"
+        },
+        {
+          "product_id": "prod_013",
+          "name": "Persian Rice",
+          "brand": "Rami Levy",
+          "size": "1kg",
+          "price_per_unit": 5.90,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 5.90,
+          "shelf_life": "6-12 months",
+          "uses": "Main dishes, bowls"
+        },
+        {
+          "product_id": "prod_087",
+          "name": "Barley",
+          "brand": "Various",
+          "size": "500g",
+          "price_per_unit": 6.50,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 6.50,
+          "shelf_life": "6-12 months",
+          "uses": "Soups, stews, risotto"
+        }
+      ],
+      "category_total": 38.10
+    },
+    {
+      "category": "pantry_and_condiments",
+      "items": [
+        {
+          "product_id": "prod_018",
+          "name": "Olive Oil - Extra Virgin",
+          "brand": "Rami Levy",
+          "size": "750ml",
+          "price_per_unit": 19.80,
+          "quantity": 1,
+          "unit": "bottle",
+          "subtotal": 19.80,
+          "shelf_life": "6-12 months",
+          "uses": "Cooking, salads, dressings"
+        },
+        {
+          "product_id": "prod_051",
+          "name": "Tahini (Sesame Paste)",
+          "brand": "Various",
+          "size": "400g jar",
+          "price_per_unit": 18.00,
+          "quantity": 1,
+          "unit": "jar",
+          "subtotal": 18.00,
+          "shelf_life": "6-12 months",
+          "uses": "Hummus, sauces, dressings"
+        },
+        {
+          "product_id": "prod_055",
+          "name": "Tomato Sauce - Canned",
+          "brand": "Various",
+          "size": "500g can",
+          "price_per_unit": 6.50,
+          "quantity": 2,
+          "unit": "cans",
+          "subtotal": 13.00,
+          "shelf_life": "1-2 years",
+          "uses": "Pasta, pizza, cooking"
+        },
+        {
+          "product_id": "prod_056",
+          "name": "Salt",
+          "brand": "Various",
+          "size": "1kg",
+          "price_per_unit": 3.50,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 3.50,
+          "shelf_life": "Indefinite",
+          "uses": "Seasoning, cooking"
+        },
+        {
+          "product_id": "prod_057",
+          "name": "Black Pepper",
+          "brand": "Various",
+          "size": "100g",
+          "price_per_unit": 12.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 12.00,
+          "shelf_life": "Indefinite",
+          "uses": "Seasoning, cooking"
+        },
+        {
+          "product_id": "prod_058",
+          "name": "Paprika Powder",
+          "brand": "Various",
+          "size": "75g",
+          "price_per_unit": 8.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 8.00,
+          "shelf_life": "6-12 months",
+          "uses": "Seasoning, Mediterranean dishes"
+        },
+        {
+          "product_id": "prod_059",
+          "name": "Cumin",
+          "brand": "Various",
+          "size": "50g",
+          "price_per_unit": 7.00,
+          "quantity": 1,
+          "unit": "pack",
+          "subtotal": 7.00,
+          "shelf_life": "6-12 months",
+          "uses": "Seasoning, Middle Eastern dishes"
+        },
+        {
+          "product_id": "prod_020",
+          "name": "Crushed Tomatoes",
+          "brand": "Rami Levy",
+          "size": "1kg can",
+          "price_per_unit": 10.00,
+          "quantity": 1,
+          "unit": "can",
+          "subtotal": 10.00,
+          "shelf_life": "1-2 years",
+          "uses": "Soups, stews, sauces"
+        }
+      ],
+      "category_total": 91.30
+    }
+  ],
+  "category_summary": {
+    "vegetables": {
+      "items": 9,
+      "subtotal": 74.55,
+      "percentage": 20.0
+    },
+    "legumes": {
+      "items": 7,
+      "subtotal": 62.70,
+      "percentage": 16.8
+    },
+    "dairy": {
+      "items": 6,
+      "subtotal": 93.30,
+      "percentage": 25.0
+    },
+    "bread_and_grains": {
+      "items": 6,
+      "subtotal": 38.10,
+      "percentage": 10.2
+    },
+    "pantry": {
+      "items": 8,
+      "subtotal": 91.30,
+      "percentage": 24.5
+    }
+  },
+  "shelf_life_categories": {
+    "very_fresh_3_to_5_days": [
+      "Tomatoes - Fresh",
+      "Spinach",
+      "Mushrooms",
+      "Cucumber",
+      "Whole Wheat Bread",
+      "Pita Bread"
+    ],
+    "medium_shelf_life_1_to_4_weeks": [
+      "Milk",
+      "Greek Yogurt",
+      "Cottage Cheese",
+      "Feta Cheese",
+      "White Cheese",
+      "Eggs",
+      "Bell Peppers",
+      "Zucchini",
+      "Hummus",
+      "Onions",
+      "Carrots"
+    ],
+    "long_shelf_life_1_to_12_months": [
+      "All dry legumes (lentils, chickpeas)",
+      "All canned items (beans, tomatoes)",
+      "All grains (rice, pasta, couscous, barley)",
+      "All spices and seasonings",
+      "Olive oil",
+      "Tahini"
+    ]
+  },
+  "total_summary": {
+    "grand_total": 372.45,
+    "already_in_cart": 11.40,
+    "shopping_list_total": 360.95,
+    "budget": 500.00,
+    "remaining": 127.55,
+    "percentage_used": 74.5
+  }
+}

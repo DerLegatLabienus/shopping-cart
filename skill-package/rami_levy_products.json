@@ -1,0 +1,1338 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-06-28",
+    "product_count": 87,
+    "currency": "ILS",
+    "source": "Rami Levy Online Store"
+  },
+  "categories": [
+    "legumes",
+    "vegetables",
+    "fruits",
+    "dairy",
+    "grains",
+    "pantry",
+    "bread",
+    "frozen",
+    "organic",
+    "condiments"
+  ],
+  "products": [
+    {
+      "id": "prod_001",
+      "name": "Red Lentils",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 7.00,
+          "price_per_unit": "1.40 per 100g"
+        },
+        {
+          "size": "1kg",
+          "price": 13.80,
+          "price_per_unit": "1.38 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_002",
+      "name": "Green Lentils",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 7.00,
+          "price_per_unit": "1.40 per 100g"
+        },
+        {
+          "size": "1kg",
+          "price": 13.90,
+          "price_per_unit": "1.39 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_003",
+      "name": "Black Lentils (Beluga)",
+      "category": "legumes",
+      "brand": "Sugat",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 9.10,
+          "price_per_unit": "1.82 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_004",
+      "name": "Brown Lentils",
+      "category": "legumes",
+      "brand": "Henei Natura",
+      "sizes": [
+        {
+          "size": "380g can",
+          "price": 8.00,
+          "price_per_unit": "2.11 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_005",
+      "name": "Hummus - Regular",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "700g",
+          "price": 10.50,
+          "price_per_unit": "1.50 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_006",
+      "name": "Whole Chickpea Hummus",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "300g",
+          "price": 7.90,
+          "price_per_unit": "2.63 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_007",
+      "name": "Large Hummus",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 8.50,
+          "price_per_unit": "1.70 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_008",
+      "name": "Jerusalem Hummus",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "250g",
+          "price": 9.40,
+          "price_per_unit": "3.76 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_009",
+      "name": "Sabachah Hummus",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 9.40,
+          "price_per_unit": "2.35 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_010",
+      "name": "Spicy Hummus (Hummus Ash)",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 9.40,
+          "price_per_unit": "2.35 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_011",
+      "name": "Couscous (Fine)",
+      "category": "grains",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "box",
+          "price": 5.00,
+          "price_per_unit": "1.43 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_012",
+      "name": "Couscous (Medium)",
+      "category": "grains",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "350g",
+          "price": 5.00,
+          "price_per_unit": "1.43 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_013",
+      "name": "Persian Rice",
+      "category": "grains",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "1kg",
+          "price": 5.90,
+          "price_per_unit": "0.59 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_014",
+      "name": "Jasmine Rice",
+      "category": "grains",
+      "brand": "Sugat",
+      "sizes": [
+        {
+          "size": "1kg",
+          "price": 11.70,
+          "price_per_unit": "1.17 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_015",
+      "name": "Wheat Flour",
+      "category": "grains",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "1kg",
+          "price": 4.90,
+          "price_per_unit": "0.49 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_016",
+      "name": "Pasta - Fusilli",
+      "category": "grains",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 4.20,
+          "price_per_unit": "0.84 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_017",
+      "name": "White Sugar",
+      "category": "pantry",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "1kg",
+          "price": 4.90,
+          "price_per_unit": "0.49 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_018",
+      "name": "Olive Oil - Extra Virgin",
+      "category": "pantry",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "750ml",
+          "price": 19.80,
+          "price_per_unit": "4.15 per 100ml"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_019",
+      "name": "Tomatoes - Fresh",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 2.90,
+          "price_per_unit": "2.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_020",
+      "name": "Crushed Tomatoes",
+      "category": "vegetables",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "1kg can",
+          "price": 10.00,
+          "price_per_unit": "1.08 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_021",
+      "name": "Cucumber - Green",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 2.90,
+          "price_per_unit": "2.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_022",
+      "name": "Beets - Red",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 2.90,
+          "price_per_unit": "2.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_023",
+      "name": "Mushrooms - Sliced",
+      "category": "vegetables",
+      "brand": "Villifood",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 4.90,
+          "price_per_unit": "1.23 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_024",
+      "name": "Watermelon",
+      "category": "fruits",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 1.90,
+          "price_per_unit": "1.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_025",
+      "name": "Onion - Yellow",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 3.50,
+          "price_per_unit": "3.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_026",
+      "name": "Onion - Red",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 4.00,
+          "price_per_unit": "4.00 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_027",
+      "name": "Garlic",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 12.00,
+          "price_per_unit": "12.00 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_028",
+      "name": "Bell Peppers - Mixed",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 6.50,
+          "price_per_unit": "6.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_029",
+      "name": "Spinach",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "200g bunch",
+          "price": 5.50,
+          "price_per_unit": "2.75 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_030",
+      "name": "Carrots",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 2.80,
+          "price_per_unit": "2.80 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_031",
+      "name": "Zucchini",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 3.90,
+          "price_per_unit": "3.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_032",
+      "name": "Lettuce",
+      "category": "vegetables",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "1 head",
+          "price": 6.00,
+          "price_per_unit": "6.00 per head"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_033",
+      "name": "Bananas",
+      "category": "fruits",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 5.50,
+          "price_per_unit": "5.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_034",
+      "name": "Apples - Red",
+      "category": "fruits",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 6.90,
+          "price_per_unit": "6.90 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_035",
+      "name": "Oranges",
+      "category": "fruits",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 7.50,
+          "price_per_unit": "7.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_036",
+      "name": "Grapes - Green",
+      "category": "fruits",
+      "brand": "Local",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 12.00,
+          "price_per_unit": "12.00 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_037",
+      "name": "Milk - 3% Mahdrin",
+      "category": "dairy",
+      "brand": "Mahdrin",
+      "sizes": [
+        {
+          "size": "1 liter",
+          "price": 8.50,
+          "price_per_unit": "0.85 per 100ml"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_038",
+      "name": "Greek Yogurt",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 9.90,
+          "price_per_unit": "2.48 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_039",
+      "name": "Cottage Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "250g",
+          "price": 7.50,
+          "price_per_unit": "3.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_040",
+      "name": "Cheddar Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 14.00,
+          "price_per_unit": "7.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_041",
+      "name": "White Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 16.00,
+          "price_per_unit": "4.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_042",
+      "name": "Eggs - Pack of 10",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "10 eggs",
+          "price": 10.50,
+          "price_per_unit": "1.05 per egg"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_043",
+      "name": "Whole Wheat Bread",
+      "category": "bread",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g loaf",
+          "price": 9.50,
+          "price_per_unit": "1.90 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_044",
+      "name": "White Bread",
+      "category": "bread",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g loaf",
+          "price": 8.50,
+          "price_per_unit": "1.70 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_045",
+      "name": "Pita Bread",
+      "category": "bread",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "6 pitas",
+          "price": 7.00,
+          "price_per_unit": "1.17 per pita"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_046",
+      "name": "Almonds",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 24.00,
+          "price_per_unit": "12.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_047",
+      "name": "Walnuts",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "250g",
+          "price": 28.00,
+          "price_per_unit": "11.20 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_048",
+      "name": "Sunflower Seeds",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "300g",
+          "price": 12.00,
+          "price_per_unit": "4.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_049",
+      "name": "Sesame Seeds",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 16.00,
+          "price_per_unit": "8.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_050",
+      "name": "Honey",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g jar",
+          "price": 32.00,
+          "price_per_unit": "6.40 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_051",
+      "name": "Tahini (Sesame Paste)",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g jar",
+          "price": 18.00,
+          "price_per_unit": "4.50 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_052",
+      "name": "Peanut Butter",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g jar",
+          "price": 16.00,
+          "price_per_unit": "4.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_053",
+      "name": "Soy Sauce",
+      "category": "condiments",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400ml",
+          "price": 12.00,
+          "price_per_unit": "3.00 per 100ml"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan"],
+      "organic": false
+    },
+    {
+      "id": "prod_054",
+      "name": "Balsamic Vinegar",
+      "category": "condiments",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500ml",
+          "price": 22.00,
+          "price_per_unit": "4.40 per 100ml"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_055",
+      "name": "Tomato Sauce - Canned",
+      "category": "condiments",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g can",
+          "price": 6.50,
+          "price_per_unit": "1.30 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_056",
+      "name": "Salt",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "1kg",
+          "price": 3.50,
+          "price_per_unit": "0.35 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_057",
+      "name": "Black Pepper",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "100g",
+          "price": 12.00,
+          "price_per_unit": "12.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_058",
+      "name": "Paprika Powder",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "75g",
+          "price": 8.00,
+          "price_per_unit": "10.67 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_059",
+      "name": "Cumin",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "50g",
+          "price": 7.00,
+          "price_per_unit": "14.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_060",
+      "name": "Organic Spinach Frozen",
+      "category": "frozen",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 15.00,
+          "price_per_unit": "3.75 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_061",
+      "name": "Organic Mixed Vegetables Frozen",
+      "category": "frozen",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 18.00,
+          "price_per_unit": "3.60 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_062",
+      "name": "Organic Broccoli Frozen",
+      "category": "frozen",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 16.00,
+          "price_per_unit": "4.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_063",
+      "name": "Organic Tomatoes",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 8.50,
+          "price_per_unit": "8.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_064",
+      "name": "Organic Carrots",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 7.50,
+          "price_per_unit": "7.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_065",
+      "name": "Organic Spinach",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 14.00,
+          "price_per_unit": "7.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_066",
+      "name": "Organic Apples",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 13.50,
+          "price_per_unit": "13.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_067",
+      "name": "Organic Bananas",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "per kg",
+          "price": 11.50,
+          "price_per_unit": "11.50 per kg"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_068",
+      "name": "Organic Whole Wheat Bread",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 14.00,
+          "price_per_unit": "2.80 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_069",
+      "name": "Organic Olive Oil",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "500ml",
+          "price": 35.00,
+          "price_per_unit": "7.00 per 100ml"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_070",
+      "name": "Organic Chickpeas - Canned",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "400g can",
+          "price": 8.50,
+          "price_per_unit": "2.13 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_071",
+      "name": "Organic Lentils",
+      "category": "organic",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 12.00,
+          "price_per_unit": "2.40 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_072",
+      "name": "Organic Yogurt",
+      "category": "dairy",
+      "brand": "Rami Levy Organic",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 14.00,
+          "price_per_unit": "3.50 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": true
+    },
+    {
+      "id": "prod_073",
+      "name": "Feta Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 12.00,
+          "price_per_unit": "6.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_074",
+      "name": "Mozzarella Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "250g",
+          "price": 13.50,
+          "price_per_unit": "5.40 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_075",
+      "name": "Butter",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "200g",
+          "price": 16.00,
+          "price_per_unit": "8.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_076",
+      "name": "Parmesan Cheese",
+      "category": "dairy",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "100g",
+          "price": 18.00,
+          "price_per_unit": "18.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_077",
+      "name": "Hummus with Tahini",
+      "category": "legumes",
+      "brand": "Tzbar",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 11.50,
+          "price_per_unit": "2.88 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_078",
+      "name": "Chickpea Grains - Dry",
+      "category": "legumes",
+      "brand": "Rami Levy",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 8.90,
+          "price_per_unit": "1.78 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_079",
+      "name": "Kidney Beans - Canned",
+      "category": "legumes",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g can",
+          "price": 7.50,
+          "price_per_unit": "1.88 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_080",
+      "name": "Black Beans - Canned",
+      "category": "legumes",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g can",
+          "price": 7.50,
+          "price_per_unit": "1.88 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_081",
+      "name": "Peas - Frozen",
+      "category": "frozen",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 8.50,
+          "price_per_unit": "2.13 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_082",
+      "name": "Corn - Frozen",
+      "category": "frozen",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 9.00,
+          "price_per_unit": "2.25 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_083",
+      "name": "Green Beans - Frozen",
+      "category": "frozen",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 9.50,
+          "price_per_unit": "2.38 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_084",
+      "name": "Chickpea Flour",
+      "category": "grains",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 14.00,
+          "price_per_unit": "2.80 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_085",
+      "name": "Hummus with Pine Nuts",
+      "category": "legumes",
+      "brand": "Tzbar",
+      "sizes": [
+        {
+          "size": "400g",
+          "price": 14.00,
+          "price_per_unit": "3.50 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher", "ready-to-eat"],
+      "organic": false
+    },
+    {
+      "id": "prod_086",
+      "name": "Zaatar (Herb Mix)",
+      "category": "pantry",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "100g",
+          "price": 9.00,
+          "price_per_unit": "9.00 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    },
+    {
+      "id": "prod_087",
+      "name": "Barley",
+      "category": "grains",
+      "brand": "Various",
+      "sizes": [
+        {
+          "size": "500g",
+          "price": 6.50,
+          "price_per_unit": "1.30 per 100g"
+        }
+      ],
+      "attributes": ["vegetarian", "vegan", "kosher"],
+      "organic": false
+    }
+  ]
+}

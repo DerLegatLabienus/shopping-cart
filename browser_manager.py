@@ -58,11 +58,18 @@ class BrowserManager:
             self.page = self.browser_context.new_page()
 
             # Get browser process info
-            browser_pid = self.browser.process.pid if self.browser.process else None
-            ws_endpoint = self.browser.websocket_endpoint if hasattr(self.browser, 'websocket_endpoint') else None
+            try:
+                browser_pid = self.browser.process.pid if hasattr(self.browser, 'process') and self.browser.process else None
+            except:
+                browser_pid = None
+
+            try:
+                ws_endpoint = self.browser.websocket_endpoint if hasattr(self.browser, 'websocket_endpoint') else None
+            except:
+                ws_endpoint = None
 
             # Navigate to Rami Levy cart page
-            self.page.goto("https://www.rami-levy.co.il/he/online", wait_until="networkidle")
+            self.page.goto("https://www.rami-levy.co.il/he", wait_until="domcontentloaded", timeout=15000)
 
             # Initialize session config
             session_config = {
@@ -200,7 +207,7 @@ class BrowserManager:
             if not self.page:
                 return False
 
-            self.page.goto("https://www.rami-levy.co.il/he/online", wait_until="networkidle")
+            self.page.goto("https://www.rami-levy.co.il/he", wait_until="domcontentloaded", timeout=15000)
             return True
 
         except Exception as e:
