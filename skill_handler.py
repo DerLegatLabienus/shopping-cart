@@ -1251,10 +1251,8 @@ class ShoppingListSkill:
             # Batch add to cart
             add_result = shopper.batch_add_to_cart(search_result['shopping_list'])
 
-            # Keep browser open for user to continue shopping
-            # (Don't close it)
-
-            return {
+            # Build result
+            result = {
                 'success': add_result['success'],
                 'shopping_list': search_result['shopping_list'],
                 'added_count': add_result['added_count'],
@@ -1262,6 +1260,40 @@ class ShoppingListSkill:
                 'total_price': search_result['total_price'],
                 'message': f"✅ {add_result['message']}"
             }
+
+            # Keep browser open indefinitely - let it stay open so user can verify
+            # This prevents the Python script from exiting and closing the browser
+            print("\n" + "="*70)
+            print("🎉 SHOPPING AUTOMATION COMPLETE!")
+            print("="*70)
+            print(f"\n✅ Added {add_result['added_count']} items to cart")
+            print(f"💰 Total: ₪{search_result['total_price']:.2f}")
+            print("\n📋 Items added:")
+            for i, item in enumerate(search_result['shopping_list'], 1):
+                print(f"  {i}. {item['name']} - ₪{item['price']:.2f}")
+            print("\n" + "="*70)
+            print("🌐 Browser is OPEN at Rami Levy website")
+            print("   → Verify items in the cart drawer (right side panel)")
+            print("   → Continue shopping if needed")
+            print("   → Close the browser window when done")
+            print("="*70 + "\n")
+
+            # Keep browser/script running indefinitely
+            # This allows user to see and interact with the browser
+            # The process stays alive, keeping the browser connection open
+            import time
+            try:
+                print("💤 Keeping browser open... Press Ctrl+C to close")
+                while True:
+                    time.sleep(5)
+            except KeyboardInterrupt:
+                print("\n👋 Closing browser...")
+                try:
+                    shopper.close()
+                except:
+                    pass
+
+            return result
 
         except Exception as e:
             return {
