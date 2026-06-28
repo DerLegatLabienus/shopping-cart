@@ -23,8 +23,8 @@ class RamiLevyStore(Store):
         products, _ = self.search_engine.advanced_search(
             name_query=" ".join(filters.keywords),
             categories=filters.categories or None,
-            min_price=filters.min_price or 0,
-            max_price=filters.max_price or float("inf"),
+            min_price=0 if filters.min_price is None else filters.min_price,
+            max_price=float("inf") if filters.max_price is None else filters.max_price,
             attributes=filters.attributes or None,
         )
         return [self._to_product(p) for p in products]

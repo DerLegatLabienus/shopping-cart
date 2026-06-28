@@ -74,7 +74,10 @@ class ShoppingListSkill:
         }
 
     def verify_cart(self) -> Dict:
-        confirmed = self.store.verify_cart()
+        all_confirmed = self.store.verify_cart()
+        local = self.cart.get()
+        local_ids = {i.product.id for i in local.items}
+        confirmed = {pid: v for pid, v in all_confirmed.items() if pid in local_ids}
         for product_id, in_cart in confirmed.items():
             if in_cart:
                 self.cart.mark_verified(product_id)
@@ -122,6 +125,11 @@ class ShoppingListSkill:
                 "clarifying_questions": [],
                 "summary": f"Added: {', '.join(added)}" if added else "No items added",
                 "browser_automation": True,
+                "applied_filters": {
+                    "categories": filters.categories,
+                    "budget": (filters.min_price, filters.max_price),
+                    "attributes": filters.attributes,
+                },
             }
         except Exception as e:
             return {
@@ -129,6 +137,11 @@ class ShoppingListSkill:
                 "products": [],
                 "clarifying_questions": [],
                 "summary": str(e),
+                "applied_filters": {
+                    "categories": filters.categories,
+                    "budget": (filters.min_price, filters.max_price),
+                    "attributes": filters.attributes,
+                },
             }
 
     @staticmethod

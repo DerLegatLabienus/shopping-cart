@@ -59,9 +59,19 @@ class QueryParser:
         if any(w in q for w in ("under", "below", "less")):
             words = q.split()
             for i, word in enumerate(words):
-                if word in ("under", "below", "less") and i + 1 < len(words):
+                if word in ("under", "below") and i + 1 < len(words):
                     try:
                         amount = float("".join(c for c in words[i + 1] if c.isdigit() or c == "."))
+                        if amount > 0:
+                            return (0.0, amount)
+                    except ValueError:
+                        pass
+                elif word == "less" and i + 1 < len(words):
+                    # handles both "less 50" and "less than 50"
+                    next_word = words[i + 1]
+                    num_word = words[i + 2] if next_word == "than" and i + 2 < len(words) else next_word
+                    try:
+                        amount = float("".join(c for c in num_word if c.isdigit() or c == "."))
                         if amount > 0:
                             return (0.0, amount)
                     except ValueError:
