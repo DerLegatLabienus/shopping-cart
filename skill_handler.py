@@ -1251,7 +1251,8 @@ class ShoppingListSkill:
             # Batch add to cart
             add_result = shopper.batch_add_to_cart(search_result['shopping_list'])
 
-            shopper.close()
+            # Keep browser open for user to continue shopping
+            # (Don't close it)
 
             return {
                 'success': add_result['success'],

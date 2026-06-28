@@ -33,6 +33,7 @@ class SmartShopper:
         self.connector = ChromeConnector()
         self.page = None
         self.shopping_list = []
+        self.keep_browser_open = True  # Keep browser open after shopping
 
     def connect_to_chrome(self) -> bool:
         """
@@ -129,8 +130,23 @@ class SmartShopper:
                 if products:
                     print(f"   ✓ Found {len(products)} results")
 
-                    # Extract first product
-                    first_product = products[0]
+                    # Find best matching product (not just first)
+                    # Prefer exact matches or products with query term
+                    best_product = None
+                    search_lower = search_term.lower()
+
+                    for product in products:
+                        product_text = product.inner_text()
+                        # Check if product text contains the search term
+                        if search_lower in product_text.lower():
+                            best_product = product
+                            break
+
+                    # Fallback to first product if no exact match
+                    if not best_product:
+                        best_product = products[0]
+
+                    first_product = best_product
                     product_id = first_product.get_attribute("id").replace("product-", "")
                     product_text = first_product.inner_text()
 
