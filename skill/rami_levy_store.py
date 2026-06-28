@@ -31,13 +31,14 @@ class RamiLevyStore(Store):
         )
         return [self._to_product(p) for p in products]
 
-    def add_to_cart(self, product_id: str, quantity: int = 1) -> CartItem:
+    def add_to_cart(self, product_id: str, quantity: int = 1, hebrew_name: str = None) -> CartItem:
         raw = self.search_engine.get_product_by_id(product_id)
         if not raw:
             raise ValueError(f"Product not found: {product_id}")
         shopper = self._get_shopper()
-        # Translate product name to Hebrew before searching on website
-        hebrew_name = self.translator.translate(raw["name"])
+        # Use provided Hebrew name, or translate if not provided
+        if not hebrew_name:
+            hebrew_name = self.translator.translate(raw["name"])
         shopper.search_for_products([hebrew_name])
         return CartItem(product=self._to_product(raw), quantity=quantity)
 

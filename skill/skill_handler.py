@@ -69,8 +69,8 @@ class ShoppingListSkill:
             if not product_raw:
                 raise ValueError(f"Product not found: {product_id}")
 
-            # Use provided Hebrew name for website search
-            item = self.store.add_to_cart(product_id, quantity)
+            # Pass Hebrew name to store for website search
+            item = self.store.add_to_cart(product_id, quantity, hebrew_name=hebrew_name)
             self.cart.add(item)
 
             english_name = product_raw.get("name", "")
