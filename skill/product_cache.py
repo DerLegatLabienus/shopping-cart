@@ -22,10 +22,17 @@ class ProductCache:
         return time.time() - data["_cache_updated_at"]
 
     def get_all(self) -> Optional[List[Dict]]:
-        if self.is_stale:
-            return None
         data = self._read_raw()
-        return data.get("products") if data else None
+        if data is None:
+            return None
+        # Check staleness inline from the single read result
+        cache_updated_at = data.get("_cache_updated_at")
+        if cache_updated_at is None:
+            return None
+        age = time.time() - cache_updated_at
+        if age > self.ttl_seconds:
+            return None
+        return data.get("products")
 
     def set_all(self, products: List[Dict]) -> None:
         data = self._read_raw() or {}
@@ -42,5 +49,8 @@ class ProductCache:
     def _read_raw(self) -> Optional[Dict]:
         if not os.path.exists(self.path):
             return None
-        with open(self.path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(self.path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, ValueError):
+            return None
