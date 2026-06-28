@@ -113,6 +113,8 @@ class Store(ABC):
 
 `ShoppingListSkill` depends only on `Store`. The concrete implementation is injected at construction time.
 
+**Cart ground truth rule:** `verify_cart()` always reads from the live website — it is the only authoritative view of what is actually in the cart. The local `CartManager` is an optimistic display cache. It must never be used as the source of truth when summarising a final order or triggering checkout.
+
 ---
 
 ## ProductCache (`product_cache.py`)
@@ -156,7 +158,7 @@ class QueryParser:
 Handles: budget extraction ("under 50", "100-200"), category aliases ("veggies" → vegetables), dietary keywords ("vegan", "organic", "kosher").
 
 ### `cart_manager.py`
-Owns local session cart state — currently the `self.cart` dict and ~6 methods in `skill_handler.py`.
+Owns local session cart state — an **optimistic mirror only**. It is never the source of truth for ordering.
 
 ```python
 class CartManager:
@@ -167,7 +169,7 @@ class CartManager:
     def clear(self) -> None: ...
 ```
 
-No browser knowledge, no Rami Levy knowledge. Pure local state.
+**Critical constraint:** The local cart reflects what we *attempted* to add. Before any order is placed or summarised as final, `Store.verify_cart()` must be called to reconcile local state against the live website. Items the website does not confirm are marked unverified and surfaced to the user. The website cart is always the ground truth — `CartManager` is a display cache, not an order record.
 
 ---
 
