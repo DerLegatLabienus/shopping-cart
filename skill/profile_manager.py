@@ -4,9 +4,11 @@ Chrome Profile Manager - Detect, select, and persist user's Chrome profile.
 Handles:
 1. Detecting available Chrome profiles
 2. Loading from env var (RAMI_LEVI_CHROME_PROFILE)
-3. Loading from config (~/.rami-levi-config.json)
+3. Loading from project-local config (.rami-levi-config.json - untracked)
 4. Interactive selection on first run
 5. Persisting selection for reuse
+
+Config stored in project root, untracked in git.
 """
 
 import json
@@ -18,7 +20,9 @@ from typing import List, Optional, Dict
 class ProfileManager:
     """Manage Chrome profile selection and persistence."""
 
-    CONFIG_FILE = os.path.expanduser("~/.rami-levi-config.json")
+    # Project-local config (untracked in git)
+    PROJECT_ROOT = Path(__file__).parent.parent
+    CONFIG_FILE = os.path.join(PROJECT_ROOT, ".rami-levi-config.json")
     ENV_VAR = "RAMI_LEVI_CHROME_PROFILE"
 
     @staticmethod
@@ -99,7 +103,7 @@ class ProfileManager:
 
     @staticmethod
     def load_from_config() -> Optional[str]:
-        """Load profile from config file."""
+        """Load profile from project-local config file (.rami-levi-config.json)."""
         if not os.path.exists(ProfileManager.CONFIG_FILE):
             return None
 
@@ -182,7 +186,7 @@ class ProfileManager:
         """
         Get the active Chrome profile using priority:
         1. Environment variable (RAMI_LEVI_CHROME_PROFILE)
-        2. Config file (~/.rami-levi-config.json)
+        2. Project-local config (.rami-levi-config.json)
         3. Interactive selection + save to config
 
         Returns:
@@ -214,6 +218,7 @@ class ProfileManager:
 
         print()
         print(f"✅ Profile saved to: {ProfileManager.CONFIG_FILE}")
+        print(f"   (Project-local, untracked in git)")
         print()
 
         return selected
