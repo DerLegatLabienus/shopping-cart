@@ -48,45 +48,43 @@ class ChromeConnector:
         """
         Find user's Chrome profile directory.
 
-        Searches common locations for Chrome profile (contains history, bookmarks, cart data).
-
-        Returns:
-            Path to Chrome profile directory, or None if not found
+        Searches common locations. If directory exists, Chrome will create/use profile.
         """
         home = str(Path.home())
-        possible_profiles = []
+        possible_base_dirs = []
 
         # Linux
-        possible_profiles.extend([
-            os.path.join(home, ".config/google-chrome/Default"),
-            os.path.join(home, ".config/chromium/Default"),
+        possible_base_dirs.extend([
+            os.path.join(home, ".config/google-chrome"),
+            os.path.join(home, ".config/chromium"),
         ])
 
         # macOS
-        possible_profiles.extend([
-            os.path.join(home, "Library/Application Support/Google/Chrome/Default"),
-            os.path.join(home, "Library/Application Support/Chromium/Default"),
+        possible_base_dirs.extend([
+            os.path.join(home, "Library/Application Support/Google/Chrome"),
+            os.path.join(home, "Library/Application Support/Chromium"),
         ])
 
         # Windows
-        possible_profiles.extend([
-            os.path.join(home, "AppData/Local/Google/Chrome/User Data/Default"),
-            os.path.join(home, "AppData/Local/Chromium/User Data/Default"),
+        possible_base_dirs.extend([
+            os.path.join(home, "AppData/Local/Google/Chrome/User Data"),
+            os.path.join(home, "AppData/Local/Chromium/User Data"),
         ])
 
-        # Find first existing profile
-        for profile in possible_profiles:
-            if os.path.exists(profile):
-                return profile
+        # Return first existing base directory
+        # Chrome will create/use Default profile in this directory
+        for base_dir in possible_base_dirs:
+            if os.path.exists(base_dir):
+                return base_dir
 
         return None
 
     def get_profile_info(self) -> str:
         """Get info about Chrome profile being used."""
         if self.profile_path:
-            return f"Using Chrome profile: {self.profile_path}\n✅ Cart data will persist!"
+            return f"✅ Using Chrome profile: {self.profile_path}\n   Cart data will persist between sessions!"
         else:
-            return "⚠️  No Chrome profile found - will use ephemeral browser (cart may be lost)"
+            return "⚠️  No Chrome profile directory found - will use ephemeral browser"
 
     def start_chrome(self) -> bool:
         """
@@ -151,10 +149,9 @@ class ChromeConnector:
                 "--no-default-browser-check",
             ]
 
-            # Add user profile if found (so cart data persists)
-            if self.profile_path and os.path.exists(self.profile_path):
-                profile_dir = os.path.dirname(self.profile_path)
-                args.append(f"--user-data-dir={profile_dir}")
+            # Add user data directory if found (Chrome will create Default profile)
+            if self.profile_path:
+                args.append(f"--user-data-dir={self.profile_path}")
 
             # Linux-specific flags
             if os.name != "nt":
