@@ -1,90 +1,57 @@
 """
-Chrome Connector - Use your real Chrome browser with persistent profile
-Detects your Chrome profile and uses it, so cart data persists after execution.
+Chrome Connector - Use your real Chrome browser with persistent profile.
 
-Features:
-- Auto-detects your Chrome profile directory
-- Auto-starts Chrome with YOUR profile (not ephemeral)
-- Keeps Chrome running - cart stays in browser
-- Session and login data preserved
+Profile selection uses priority:
+1. RAMI_LEVI_CHROME_PROFILE environment variable
+2. ~/.rami-levi-config.json config file
+3. Interactive selection (saves for reuse)
 """
 
-import json
 import subprocess
 import time
 import os
-from typing import Dict, Optional
-from pathlib import Path
+from typing import Optional
+from profile_manager import ProfileManager
 
 
 class ChromeConnector:
     """
     Connect to user's real Chrome browser with persistent profile.
 
-    Uses your actual Chrome profile so:
-    - Your login/session is available
-    - Shopping cart persists
-    - Browser stays open after automation ends
+    Profile is selected via:
+    - Environment variable: RAMI_LEVI_CHROME_PROFILE
+    - Config file: ~/.rami-levi-config.json
+    - Interactive selection (first run)
     """
 
-    def __init__(self, debug_port: int = 9222, auto_start: bool = True, use_profile: bool = True):
+    def __init__(self, debug_port: int = 9222, auto_start: bool = True):
         """
-        Initialize Chrome connector.
+        Initialize Chrome connector with user's selected profile.
 
         Args:
             debug_port: Chrome remote debugging port (default 9222)
             auto_start: Auto-start Chrome if not running (default True)
-            use_profile: Use user's Chrome profile instead of ephemeral (default True)
         """
         self.debug_port = debug_port
         self.auto_start = auto_start
-        self.use_profile = use_profile
         self.browser = None
         self.page = None
         self.ws_endpoint = None
-        self.profile_path = self._find_chrome_profile() if use_profile else None
+        self.profile_path = None
 
-    def _find_chrome_profile(self) -> Optional[str]:
-        """
-        Find user's Chrome profile directory.
-
-        Searches common locations. If directory exists, Chrome will create/use profile.
-        """
-        home = str(Path.home())
-        possible_base_dirs = []
-
-        # Linux
-        possible_base_dirs.extend([
-            os.path.join(home, ".config/google-chrome"),
-            os.path.join(home, ".config/chromium"),
-        ])
-
-        # macOS
-        possible_base_dirs.extend([
-            os.path.join(home, "Library/Application Support/Google/Chrome"),
-            os.path.join(home, "Library/Application Support/Chromium"),
-        ])
-
-        # Windows
-        possible_base_dirs.extend([
-            os.path.join(home, "AppData/Local/Google/Chrome/User Data"),
-            os.path.join(home, "AppData/Local/Chromium/User Data"),
-        ])
-
-        # Return first existing base directory
-        # Chrome will create/use Default profile in this directory
-        for base_dir in possible_base_dirs:
-            if os.path.exists(base_dir):
-                return base_dir
-
-        return None
+        # Get profile using priority: env var → config file → interactive
+        try:
+            self.profile_path = ProfileManager.get_active_profile()
+        except ValueError as e:
+            print(str(e))
+            raise
 
     def get_profile_info(self) -> str:
         """Get info about Chrome profile being used."""
         if self.profile_path:
             return f"✅ Using Chrome profile: {self.profile_path}\n   Cart data will persist between sessions!"
         else:
-            return "⚠️  No Chrome profile directory found - will use ephemeral browser"
+            return "⚠️  Error: No valid Chrome profile selected"
 
     def start_chrome(self) -> bool:
         """
