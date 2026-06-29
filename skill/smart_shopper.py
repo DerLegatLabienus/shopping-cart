@@ -37,17 +37,20 @@ class SmartShopper:
 
     def connect_to_chrome(self) -> bool:
         """
-        Connect to browser (fully automated).
+        Connect to your real Chrome browser with persistent profile.
 
-        Handles fallbacks:
-        1. Connect to existing Chrome on debug port
-        2. Auto-start Chrome with debugging
-        3. Use Playwright's bundled Chromium (always works)
+        Handles:
+        1. Connect to existing Chrome on debug port (keeps running)
+        2. Auto-start Chrome with your profile (cart data persists)
+        3. Fallback to bundled Chromium only if no profile found
 
         Returns:
             True if connected successfully
         """
         try:
+            # Show which Chrome profile is being used
+            profile_info = self.connector.get_profile_info()
+            print(f"🔌 {profile_info}")
             # connect() handles all fallbacks internally
             self.page = self.connector.connect()
             return self.page is not None

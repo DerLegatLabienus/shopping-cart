@@ -1,66 +1,102 @@
 """
-Chrome Connector - Connect to user's existing Chrome browser instance
-Instead of launching a new browser, use the one already open with user's session.
+Chrome Connector - Use your real Chrome browser with persistent profile
+Detects your Chrome profile and uses it, so cart data persists after execution.
 
-Usage:
-1. Start Chrome with remote debugging:
-   chrome --remote-debugging-port=9222
-
-2. Connect from skill:
-   connector = ChromeConnector()
-   page = connector.connect()
-   # Now use page for automation
+Features:
+- Auto-detects your Chrome profile directory
+- Auto-starts Chrome with YOUR profile (not ephemeral)
+- Keeps Chrome running - cart stays in browser
+- Session and login data preserved
 """
 
 import json
 import subprocess
 import time
+import os
 from typing import Dict, Optional
 from pathlib import Path
 
 
 class ChromeConnector:
     """
-    Connect to an existing Chrome browser instance.
+    Connect to user's real Chrome browser with persistent profile.
 
-    Instead of creating a new automated browser (which triggers bot detection),
-    connect to the user's real Chrome browser with their session intact.
-
-    Requirements:
-    - Chrome/Chromium running with --remote-debugging-port=9222
-    - Or auto-start Chrome with that flag
+    Uses your actual Chrome profile so:
+    - Your login/session is available
+    - Shopping cart persists
+    - Browser stays open after automation ends
     """
 
-    def __init__(self, debug_port: int = 9222, auto_start: bool = True):
+    def __init__(self, debug_port: int = 9222, auto_start: bool = True, use_profile: bool = True):
         """
         Initialize Chrome connector.
 
         Args:
             debug_port: Chrome remote debugging port (default 9222)
             auto_start: Auto-start Chrome if not running (default True)
+            use_profile: Use user's Chrome profile instead of ephemeral (default True)
         """
         self.debug_port = debug_port
         self.auto_start = auto_start
+        self.use_profile = use_profile
         self.browser = None
         self.page = None
         self.ws_endpoint = None
+        self.profile_path = self._find_chrome_profile() if use_profile else None
+
+    def _find_chrome_profile(self) -> Optional[str]:
+        """
+        Find user's Chrome profile directory.
+
+        Searches common locations for Chrome profile (contains history, bookmarks, cart data).
+
+        Returns:
+            Path to Chrome profile directory, or None if not found
+        """
+        home = str(Path.home())
+        possible_profiles = []
+
+        # Linux
+        possible_profiles.extend([
+            os.path.join(home, ".config/google-chrome/Default"),
+            os.path.join(home, ".config/chromium/Default"),
+        ])
+
+        # macOS
+        possible_profiles.extend([
+            os.path.join(home, "Library/Application Support/Google/Chrome/Default"),
+            os.path.join(home, "Library/Application Support/Chromium/Default"),
+        ])
+
+        # Windows
+        possible_profiles.extend([
+            os.path.join(home, "AppData/Local/Google/Chrome/User Data/Default"),
+            os.path.join(home, "AppData/Local/Chromium/User Data/Default"),
+        ])
+
+        # Find first existing profile
+        for profile in possible_profiles:
+            if os.path.exists(profile):
+                return profile
+
+        return None
+
+    def get_profile_info(self) -> str:
+        """Get info about Chrome profile being used."""
+        if self.profile_path:
+            return f"Using Chrome profile: {self.profile_path}\n✅ Cart data will persist!"
+        else:
+            return "⚠️  No Chrome profile found - will use ephemeral browser (cart may be lost)"
 
     def start_chrome(self) -> bool:
         """
-        Start Chrome with remote debugging enabled (automatically).
-        Finds Chrome on system and launches it.
+        Start Chrome with remote debugging and user profile.
 
-        Returns:
-            True if started successfully
+        Uses your actual Chrome profile so cart data persists.
         """
         try:
-            import shutil
-            import os
-
-            # Try to find Chrome executable
+            # Find Chrome executable
             chrome_path = None
-
-            # Check common paths
             possible_paths = [
                 "google-chrome",
                 "google-chrome-stable",
@@ -75,7 +111,7 @@ class ChromeConnector:
                 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
             ]
 
-            # Try to find Chrome using which/where
+            # Try which/where first
             for cmd_name in ["google-chrome", "chromium", "google-chrome-stable"]:
                 try:
                     result = subprocess.run(
@@ -90,19 +126,14 @@ class ChromeConnector:
                 except:
                     pass
 
-            # Check direct paths if which/where didn't work
+            # Check direct paths
             if not chrome_path:
                 for path in possible_paths:
                     try:
                         if os.path.exists(path):
                             chrome_path = path
                             break
-                        # Try running it
-                        result = subprocess.run(
-                            [path, "--version"],
-                            capture_output=True,
-                            timeout=2
-                        )
+                        result = subprocess.run([path, "--version"], capture_output=True, timeout=2)
                         if result.returncode == 0:
                             chrome_path = path
                             break
@@ -110,12 +141,9 @@ class ChromeConnector:
                         continue
 
             if not chrome_path:
-                raise Exception(
-                    "Chrome not found on system. "
-                    "Please install Google Chrome or Chromium."
-                )
+                raise Exception("Chrome not found on system.")
 
-            # Start Chrome with debugging
+            # Build launch arguments
             args = [
                 chrome_path,
                 f"--remote-debugging-port={self.debug_port}",
@@ -123,11 +151,16 @@ class ChromeConnector:
                 "--no-default-browser-check",
             ]
 
-            # Add no-sandbox for Linux
+            # Add user profile if found (so cart data persists)
+            if self.profile_path and os.path.exists(self.profile_path):
+                profile_dir = os.path.dirname(self.profile_path)
+                args.append(f"--user-data-dir={profile_dir}")
+
+            # Linux-specific flags
             if os.name != "nt":
                 args.append("--no-sandbox")
 
-            # Launch Chrome
+            # Launch Chrome (keep it running, don't wait for completion)
             process = subprocess.Popen(
                 args,
                 stdout=subprocess.DEVNULL,
@@ -136,7 +169,7 @@ class ChromeConnector:
             )
 
             # Wait for Chrome to be ready
-            for attempt in range(10):
+            for attempt in range(15):
                 time.sleep(1)
                 if self.check_chrome_running():
                     return True
@@ -148,7 +181,12 @@ class ChromeConnector:
 
     def connect(self) -> Optional:
         """
-        Connect to existing Chrome instance via remote debugging.
+        Connect to user's Chrome with persistent profile.
+
+        Priority:
+        1. Existing Chrome with debugging port (keep running)
+        2. Auto-start Chrome with user's profile (cart data persists)
+        3. Only fallback to bundled Chromium if NO profile found
 
         Returns:
             Playwright page object if connected, None if failed
@@ -156,49 +194,49 @@ class ChromeConnector:
         try:
             from playwright.sync_api import sync_playwright
 
-            # Get WebSocket endpoint from Chrome
+            # Try to connect to existing Chrome
             ws_endpoint = self._get_ws_endpoint()
 
             if ws_endpoint:
-                # Connect via WebSocket to YOUR existing Chrome
+                # Connected to existing Chrome - use it
                 playwright = sync_playwright().start()
                 self.browser = playwright.chromium.connect(ws_endpoint)
-
-                # Get or create page
                 contexts = self.browser.contexts
                 if contexts:
                     context = contexts[0]
                 else:
                     context = self.browser.new_context()
-
                 pages = context.pages
-                if pages:
-                    self.page = pages[0]
-                else:
-                    self.page = context.new_page()
-
+                self.page = pages[0] if pages else context.new_page()
                 return self.page
 
-            # Chrome not running - try auto-launch
-            self.start_chrome()
-            ws_endpoint = self._get_ws_endpoint()
-            if ws_endpoint:
+            # Chrome not running - auto-start with user profile
+            if self.auto_start:
+                if self.start_chrome():
+                    # Try connecting again
+                    for attempt in range(10):
+                        time.sleep(1)
+                        ws_endpoint = self._get_ws_endpoint()
+                        if ws_endpoint:
+                            playwright = sync_playwright().start()
+                            self.browser = playwright.chromium.connect(ws_endpoint)
+                            context = self.browser.new_context()
+                            self.page = context.new_page()
+                            return self.page
+
+            # Only fallback to bundled Chromium if NO user profile exists
+            # (ephemeral, but better than nothing)
+            if not self.profile_path:
+                print("⚠️  Warning: Using ephemeral Chromium (no user profile found). Cart will be lost!")
                 playwright = sync_playwright().start()
-                self.browser = playwright.chromium.connect(ws_endpoint)
-                context = self.browser.new_context()
-                self.page = context.new_page()
-                return self.page
-
-            # Fallback: Use bundled Chromium (always available)
-            playwright = sync_playwright().start()
-            self.browser = playwright.chromium.launch(
-                headless=False,
-                args=[
-                    '--disable-blink-features=AutomationControlled',
-                    '--no-first-run',
-                    '--no-default-browser-check',
-                ]
-            )
+                self.browser = playwright.chromium.launch(
+                    headless=False,
+                    args=[
+                        '--disable-blink-features=AutomationControlled',
+                        '--no-first-run',
+                        '--no-default-browser-check',
+                    ]
+                )
             context = self.browser.new_context(
                 user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
             )
